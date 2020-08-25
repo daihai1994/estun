@@ -21,6 +21,8 @@ const supplier = () => import('../views/Supplier')
 const logger = () => import('../views/Logger')
 const personalInfo = () => import('../views/PersonalInfo')
 const order = () => import('../views/Order')
+const customer = () => import('../views/Customer')
+const price = () => import('../views/Price')
 
 
 const routes = [
@@ -81,6 +83,14 @@ const routes = [
                 },
                 component: supplier
             },
+            { //客户管理
+                path: '/customer',
+                meta: {
+                    name: '客户管理',
+                    comp: 'customer'
+                },
+                component: customer
+            },
             { //日志管理
                 path: '/logger',
                 meta: {
@@ -105,6 +115,14 @@ const routes = [
                     comp: 'order'
                 },
                 component: order
+            } ,
+            { //价格管理
+                path: '/price',
+                meta: {
+                    name: '价格管理',
+                    comp: 'price'
+                },
+                component: price
             }
 
 

@@ -578,6 +578,8 @@
                                 that.$message.success("删除成功");
                                 that.currentRow = {};
                                 that.btnSearch();
+                            }else{
+                                that.$message.error(res.data);
                             }
                         }).catch(() => {
                             that.listLoading = false;

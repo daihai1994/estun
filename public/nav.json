@@ -50,6 +50,16 @@
       ]
     },
     {
+      "icon": "supplier.png",
+      "title": "客户管理",
+      "child": [
+        {
+          "title": "客户管理",
+          "path": "/customer"
+        }
+      ]
+    },
+    {
       "icon": "goods.png",
       "title": "物品管理",
       "child": [
@@ -70,12 +80,12 @@
       ]
     },
     {
-      "icon": "warehousing.png",
-      "title": "入库管理",
+      "icon": "order.png",
+      "title": "价格管理",
       "child": [
         {
-          "title": "入库管理",
-          "path": "/warehousing"
+          "title": "价格管理",
+          "path": "/price"
         }
       ]
     },

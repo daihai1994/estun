@@ -32,8 +32,8 @@
             </el-form>
         </el-col>
         <el-table
-                ref="supplier"
-                :data="supplierData"
+                ref="customer"
+                :data="customerData"
                 :header-cell-style="tableHeaderColor"
                 border
                 highlight-current-row
@@ -170,7 +170,7 @@
                     name: '',
                     effective: 2
                 },
-                supplierData: [],//数据
+                customerData: [],//数据
                 tableLength: 0,//数据总个数
                 // 更改表头样式
                 tableHeaderColor({rowIndex}) {
@@ -220,20 +220,20 @@
             //查询客户
             search: function () {
                 let that = this;
-                let url = "/supplier/searchSuppliers";
+                let url = "/customer/searchCustomers";
                 let param = {
                     name: that.filters.name,
                     effective: that.filters.effective,
                     size: that.pageSize,// 每页的记录数（行数）
                     page: that.page//第几条开始
                 };
-                that.supplierData = [];
+                that.customerData = [];
                 that.listLoading = true;
                 this.post_url(url, param, "查询客户失败！", null).then(function (res) {
                     that.listLoading = false;
                     console.info("查询客户返回体", res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                        that.supplierData = res.data.list;
+                        that.customerData = res.data.list;
                         that.tableLength = res.data.total;
                     }
 
@@ -290,7 +290,7 @@
                         let param = {
                             id: this.currentRow.id//删除 客户ID
                         }
-                        let url = "/supplier/deleteSupplier";//删除客户
+                        let url = "/customer/deleteCustomer";//删除客户
                         this.post_url(url, param, "删除客户失败！", null).then(function (res) {
                             that.listLoading = false;
                             console.info("删除客户返回体", res);
@@ -335,7 +335,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.editLoading = true;
                             let that = this;
-                            let url = "/supplier/updateSupplier";//编辑提交
+                            let url = "/customer/updateCustomer";//编辑提交
                             let param = that.editForm;
                             this.post_url(url, param, "修改客户失败！", null).then(function (res) {
                                 that.editLoading = false;
@@ -364,7 +364,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let that = this;
-                            let url = "/supplier/addSupplier";//新增客户
+                            let url = "/customer/addCustomer";//新增客户
                             let param = that.addForm;
                             this.post_url(url, param, "新增客户失败！", null).then(function (res) {
                                 that.addLoading = false;

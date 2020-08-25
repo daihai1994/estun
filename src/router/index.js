@@ -1,5 +1,5 @@
 /**
- * 用户信息实体类
+ * vue路由
  * Created at 2020/5/21 10:07
  *
  * @author DaiHai
@@ -10,7 +10,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-const warehouse = () => import('../views/Warehouse')
 const goods = () => import('../views/Goods')
 const userInfo = () => import('../views/UserInfo')
 const authority = () => import('../views/Authority')
@@ -21,16 +20,7 @@ const homeUpdatePass = () => import('../views/HomeUpdatePass')
 const supplier = () => import('../views/Supplier')
 const logger = () => import('../views/Logger')
 const personalInfo = () => import('../views/PersonalInfo')
-const stock = () => import('../views/Stock')
 const order = () => import('../views/Order')
-const approve = () => import('../views/Approve')
-const consigneeInfo = () => import('../views/ConsigneeInfo')
-const logistics = () => import('../views/Logistics')
-const warehousing = () =>import('../views/Warehousing')
-const property = () =>import('../views/Property')
-const warehouseOut = () =>import('../views/WarehouseOut')
-const inventory = () =>import('../views/Inventory')
-const graphical = () =>import('../views/Graphical')
 
 
 const routes = [
@@ -66,14 +56,6 @@ const routes = [
                     comp: 'authority'
                 },
                 component: authority
-            },
-            { //仓库管理
-                path: '/warehouse',
-                meta: {
-                    name: '仓库管理',
-                    comp: 'warehouse'
-                },
-                component: warehouse
             },
             { //物品管理
                 path: '/goods',
@@ -115,16 +97,7 @@ const routes = [
                     comp: 'personalInfo'
                 },
                 component: personalInfo
-            }
-            ,
-            { //个人信息
-                path: '/stock',
-                meta: {
-                    name: '库存管理',
-                    comp: 'stock'
-                },
-                component: stock
-            },
+            } ,
             { //下单管理
                 path: '/order',
                 meta: {
@@ -132,71 +105,8 @@ const routes = [
                     comp: 'order'
                 },
                 component: order
-            },
-            { //审核管理
-                path: '/approve',
-                meta: {
-                    name: '审核管理',
-                    comp: 'approve'
-                },
-                component: approve
-            },
-            { //收货地址
-                path: '/consigneeInfo',
-                meta: {
-                    name: '收货地址',
-                    comp: 'consigneeInfo'
-                },
-                component: consigneeInfo
-            },
-            { //物流信息
-                path: '/logistics',
-                meta: {
-                    name: '物流管理',
-                    comp: 'logistics'
-                },
-                component: logistics
-            },
-            { //入库管理
-                path: '/warehousing',
-                meta: {
-                    name: '入库管理',
-                    comp: 'warehousing'
-                },
-                component: warehousing
-            },
-            { //入库管理
-                path: '/warehouseOut',
-                meta: {
-                    name: '出库管理',
-                    comp: 'warehouseOut'
-                },
-                component: warehouseOut
-            },
-            { //财产管理
-                path: '/property',
-                meta: {
-                    name: '财产管理',
-                    comp: 'property'
-                },
-                component: property
-            },
-            { //仓库盘点
-                path: '/inventory',
-                meta: {
-                    name: '仓库盘点',
-                    comp: 'inventory'
-                },
-                component: inventory
-            },
-            { //图形数据
-                path: '/graphical',
-                meta: {
-                    name: '图形数据',
-                    comp: 'graphical'
-                },
-                component: graphical
             }
+
 
         ]
     }

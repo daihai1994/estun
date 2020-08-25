@@ -83,6 +83,6 @@
       "icon": "log.png",
       "title": "日志查询",
       "path": "/logger"
-    },
+    }
   ]
 }

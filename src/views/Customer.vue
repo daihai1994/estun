@@ -22,11 +22,23 @@
                         <el-dropdown-item @click.native="btnReset">重置</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-                <el-dropdown split-button type="primary" @click="btnNew" trigger="click">
+                <el-dropdown split-button type="primary" @click="btnNew" trigger="click" style="margin-right: 10px">
                     新增
                     <el-dropdown-menu slot="dropdown" trigger="click">
                         <el-dropdown-item @click.native="btnEdit">编辑</el-dropdown-item>
                         <el-dropdown-item @click.native="btnDelete">删除</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown split-button type="primary" @click="file" trigger="click" style="margin-right: 10px">
+                    文件上传
+                    <el-dropdown-menu slot="dropdown" trigger="click">
+                        <el-dropdown-item @click.native="addSupplierExcelTemplate">下载导入模板</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown split-button type="primary" @click="exportAll" trigger="click" style="margin-right: 10px">
+                    全部导出
+                    <el-dropdown-menu slot="dropdown" trigger="click">
+                        <el-dropdown-item @click.native="filterExport">条件导出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-form>
@@ -124,6 +136,29 @@
                 <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
             </div>
         </el-dialog>
+        <!-- ************************************文件操作*************************************************** -->
+        <el-dialog title="文件操作" center :visible.sync="editFormVisibleFile"
+                   :close-on-click-modal="false"
+                   width="63%" style="align-items: center">
+            <el-upload
+                    class="upload-demo"
+                    ref="uploadFile"
+                    action="#"
+                    :on-preview="handlePreview"
+                    :on-change="handleChange"
+                    :on-remove="handleRemove"
+                    :on-exceed="handleExceed"
+                    :file-list="fileList"
+                    name="excelFile"
+                    :http-request="uploadFiles"
+                    :on-success="onSuccess"
+                    :on-error="imgUploadError"
+                    :auto-upload="false">
+                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUploadFile">上传到服务器
+                </el-button>
+            </el-upload>
+        </el-dialog>
     </div>
 </template>
 
@@ -198,9 +233,16 @@
                     label: '全部'
                 }],
                 currentRow: {},//行数据
+                editFormVisibleFile:false,//文件上传界面
+                fileList:[],//文件list
             }
         },
         methods: {
+            //文件上传
+            file(){
+                this.editFormVisibleFile = true;
+                this.fileList = [];
+            },
             //改变行选择事件
             handleTableChange(val) {
                 let that = this;
@@ -391,6 +433,171 @@
             btnSearch: function () {
                 this.search();
             },
+            //点击文件
+            handlePreview(file) {
+                console.log(file);
+            },
+            //文件改变事件
+            handleChange(file, fileList) {
+                let existFile = fileList.slice(0, fileList.length - 1).find(f => f.name === file.name);
+                if (existFile) {
+                    this.$message.error('当前文件已经存在!');
+                    fileList.pop();
+                }
+                this.fileList = fileList;
+            },
+            handleExceed(files, fileList) {
+                // this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共存在了 ${this.picturesList.length} 个文件`);
+            },
+            handleRemove(file) {
+                this.dialogImageUrl = "";
+                this.dialogVisible = false;
+                this.$refs.uploadFile.clearFiles();
+            },
+            //上传文件
+            uploadFiles(file) {
+                this.fileData.append('excelFile', file.file);  // append增加数据
+            },
+            // 图片上传成功后，后台返回图片的路径
+            onSuccess: function (res) {
+                if (res.code == 1001) {
+                    this.$message({
+                        message: '恭喜你，上传成功',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message.error('上传失败，请重新上传');
+                }
+            },
+            //图片上传失败调用
+            imgUploadError(err, file, fileList) {
+                console.log(err)
+                this.$refs.uploadFile.clearFiles();
+                this.$message.error('上传图片失败!');
+            },
+            addSupplierExcelTemplate(){
+                let url;
+                url = "/file/addCustomerExcelTemplate";
+                let param = {};
+                this.postExport(url, param).then(function (res) {
+                    if (!res) {
+                        return
+                    }
+                    const link = document.createElement('a')
+
+                    let blob = new Blob([res.data], { type: 'application/octer-stream' });
+
+                    link.style.display = 'none'
+
+                    link.href = URL.createObjectURL(blob);
+
+                    link.setAttribute('download', '客户导入模板.xlsx');
+
+                    document.body.appendChild(link);
+
+                    link.click();
+
+                    document.body.removeChild(link);
+                }).catch(function (res) {
+                    console.info("提交新增客户报错返回体", res)
+                    that.$message.error('上传失败，请重新上传');
+                });
+            },
+            submitUploadFile(){
+                let that = this;
+                if (this.fileList.length === 0) {
+                    this.$message({
+                        message: '请先选择文件',
+                        type: 'warning'
+                    })
+                } else {
+                    this.fileData = new FormData();  // new formData对象
+                    this.$refs.uploadFile.submit();  // 提交调用uploadFile函数
+                    let url;
+                    url = "/file/addCustomerExcel";
+
+                    let param = this.fileData;
+                    this.postUpload(url, param, "上传文件失败！", null).then(function (res) {
+                        if (res.data.code === Variable_global.errorCode.SUCCESS) {
+                            that.$message({
+                                message: res.data.data,
+                                type: 'success'
+                            });
+                            that.$refs.uploadFile.clearFiles();
+                            that.editFormVisibleFile = false;
+                            that.search();
+                        } else {
+                            that.$message.error(res.data.data);
+                        }
+                        console.info("提交新增客户返回体", res)
+                    }).catch(function (res) {
+                        console.info("提交新增客户报错返回体", res)
+                        that.$message.error('上传失败，请重新上传');
+                    });
+                }
+            },
+            //条件导出
+            filterExport(){
+                let that = this;
+                let url;
+                url = "/file/filterExport_Customer";
+                let param = {
+                    name: that.filters.name,
+                    effective: that.filters.effective,
+                    size: that.pageSize,// 每页的记录数（行数）
+                    page: that.page//第几条开始
+                };
+                this.postExport(url, param).then(function (res) {
+                    if (!res) {
+                        return
+                    }
+                    const link = document.createElement('a')
+
+                    let blob = new Blob([res.data], { type: 'application/octer-stream' });
+
+                    link.style.display = 'none'
+
+                    link.href = URL.createObjectURL(blob);
+
+                    link.setAttribute('download', '客户导出.xlsx');
+
+                    document.body.appendChild(link);
+
+                    link.click();
+
+                    document.body.removeChild(link);
+                }).catch(function (res) {
+                    console.info("提交新增客户报错返回体", res)
+                    that.$message.error('上传失败，请重新上传');
+                });
+
+            },
+            //全部导出
+            exportAll(){
+                let url;
+                url = "/file/exportAll_Customer";
+                let param = {};
+                this.postExport(url, param).then(function (res) {
+                    if (!res) {
+                        return
+                    }
+                    const link = document.createElement('a')
+
+                    let blob = new Blob([res.data], {type: 'application/octer-stream'});
+
+                    link.style.display = 'none'
+
+                    link.href = URL.createObjectURL(blob);
+
+                    link.setAttribute('download', '客户导出.xlsx');
+
+                    document.body.appendChild(link);
+
+                    link.click();
+
+                    document.body.removeChild(link);
+                })
+            }
 
         },
         mounted() {

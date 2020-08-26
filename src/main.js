@@ -218,6 +218,33 @@ Vue.prototype.post_url_notEncryption = function (url, param) {
 }
 
 /**
+ * post请求导出
+ * @param url
+ * @param param
+ */
+Vue.prototype.postExport = function (url, param) {
+    let that = this;
+    console.info("data条件", param)
+    return new Promise(function (resolve) {
+        let postData = qs.stringify(param);
+        axiosUtil({
+            url: url,
+            method: 'post',
+            data: postData,
+            responseType:'blob'
+        }).then(function (res) {
+            console.info("导出返回体", res)
+            resolve(res);
+        }).catch(function (res) {
+            that.$message.error("服务器繁忙！");
+        });
+
+    });
+}
+
+
+
+/**
  * post请求
  * @param url
  * @param param
@@ -296,6 +323,36 @@ Vue.prototype.post_url = function (url, param, message, functions, state) {
         });
     });
 }
+/**
+ * postUploadTemplate下载
+ * @param url
+ * @param param
+ */
+Vue.prototype.getUploadTemplate = function (url, param) {
+    console.info("下载文件信息", param)
+    return new Promise(function (resolve) {
+        //校验后台用户数据
+        axiosUtil({
+            url: url,
+            method: 'post',
+            data: param,
+            responseType:'blob'
+        }).then(function (res) {
+                resolve(res);
+            const link = document.createElement("a");
+            let blob = new Blob([res.data], { type: "application/vnd.ms-excel" });
+            link.style.display = "none";
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", decodeURI(res.headers['filename']));
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link)
+        }).catch(function (res) {
+            resolve(res);
+        });
+    });
+}
+
 
 /**
  * postUpload上传

@@ -182,7 +182,6 @@
                 addFormRules: {
                     name: [{required: true, message: '请输入姓名', trigger: 'blur'},],
                     username: [{required: true, message: '请输入手机号', trigger: 'blur'}],
-                    mail: [{required: true, message: '请输入邮箱', trigger: 'blur'}],
                     password: [{validator: password, trigger: 'blur'}],
                 },
                 //新增界面数据
@@ -418,7 +417,7 @@
                                     that.addForm = {};
                                     that.search();
                                 } else {
-                                    that.$message.error("新增失败");
+                                    that.$message.error(res.data);
                                 }
                             }).catch(() => {
                                 that.addLoading = false;

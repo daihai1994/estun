@@ -317,6 +317,11 @@
                             label="简称">
                     </el-table-column>
                     <el-table-column
+                            prop="price"
+                            sortable
+                            label="价钱">
+                    </el-table-column>
+                    <el-table-column
                             prop="effective"
                             label="状态"
                             :formatter="effectiveHandle">
@@ -326,6 +331,7 @@
                             label="操作">
                         <template slot-scope="scope">
                             <el-button @click="operationPicture(scope.row)" type="text" size="small">图片操作</el-button>
+                            <el-button @click="operationPicture(scope.row)" type="text" size="small">价格操作</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

@@ -59,10 +59,10 @@ const routes = [
                 },
                 component: authority
             },
-            { //物品管理
+            { //物料管理
                 path: '/material',
                 meta: {
-                    name: '物品管理',
+                    name: '物料管理',
                     comp: 'material'
                 },
                 component: material

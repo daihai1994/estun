@@ -1,13 +1,11 @@
 import Axios from "axios";
+import ipconfig from '../../public/config/IPConfig';
 
 Axios.defaults.withCredentials = true
 
 export function axiosUtil(config) {
     const instance = Axios.create({
-        //baseURL: 'http://192.168.2.104:editFormVisiblePicture',
-        //baseURL: 'http://192.168.2.133:8081',
-        //baseURL: 'http://114.67.105.43:8081',
-        baseURL: 'http://localhost:8081',
+        baseURL: ipconfig.LINK_BACK,
         timeout: 5000,
         // 'Content-Type': "application/json;charset=utf-8",
         //  xhrFields: {withCredentials:true},

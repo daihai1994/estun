@@ -86,7 +86,7 @@
             let url = "";//操作人
             if (JSON.parse(sessionStorage.getItem("user")) != null) {
                 url = JSON.parse(sessionStorage.getItem("user")).iconUrl;
-                that.$store.commit("header/setHeadUrl", that.getPath() + ":" + that.getPort() + url);
+                that.$store.commit("header/setHeadUrl", that.getLocation() + url);
             } else {
                 that.$message.error("账号过期，请重新登录!")
                 that.$router.push({

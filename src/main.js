@@ -8,6 +8,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import aes from '././aes/aes'
 import rsa, {getSign, rsaEncrypt} from '././rsa/rsa'
+import ipconfig from '../public/config/IPConfig'
 import global from './global_variable'
 import AlobalData from "@/global_variable";
 import {axiosUtil} from "@/network/axiosUtil";
@@ -126,25 +127,15 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
     NProgress.done()
 })
-Vue.prototype.getPath = function () {
-    //return "http://192.168.2.133"
-    return "http://114.67.105.43"
-    //return "http://localhost"
-}
-Vue.prototype.getPort = function () {
-    return "8081"
-}
 
+//Springboot后台路径
 Vue.prototype.getLocation = function () {
-    return "http://localhost:8081/"
-    //return "http://114.67.105.43:8081/"
-    //return "http://localhost:8081/"
+    return ipconfig.LINK_BACK;
 }
 
+//vue首页页面
 Vue.prototype.getLocationHref = function () {
-    //return "http://localhost:9999/"
-    return "http://114.67.105.43:9999/"
-    //return "http://localhost:9999/"
+    return ipconfig.LINK_FRONT;
 }
 
 /**

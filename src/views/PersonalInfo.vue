@@ -175,8 +175,8 @@
                                     type: 'success'
                                 });
                                 if (res.data.data.url != null && res.data.data.url != "") {
-                                    console.info("完整图片路径", that.getPath() + ":" + that.getPort() + res.data.data.url)
-                                    that.$store.commit("header/setHeadUrl", that.getPath() + ":" + that.getPort() + res.data.data.url);
+                                    console.info("完整图片路径", that.getLocation() + res.data.data.url)
+                                    that.$store.commit("header/setHeadUrl", that.getLocation() + res.data.data.url);
                                     let user = JSON.parse(sessionStorage.getItem("user"));
                                     if (user != null) {
                                         user.iconUrl = res.data.data.url;

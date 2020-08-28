@@ -744,7 +744,7 @@
             },
             //拼接图片地址
             getImgUrl(url){
-                return this.getPath() + ":" + this.getPort() + url;
+                return this.getLocation() + url;
             },
             //获取系统时间
             getNewTime(){

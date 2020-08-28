@@ -1329,7 +1329,7 @@
                                 let pictures = res.data.list[i].pictures;
                                 for (let j = 0; j < pictures.length; j++) {
                                     let picture = pictures[j].url;
-                                    picture = that.getPath() + ":" + that.getPort() + picture;
+                                    picture = that.getLocation() + picture;
                                     pictures[j].url = picture;
                                 }
                             }

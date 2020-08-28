@@ -1,28 +1,25 @@
 const path = require('path');
-
 const webpack = require('webpack')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 const isProduction = process.env.NODE_ENV === 'production'
 
-
-
-
 module.exports = {
     devServer: {
+        port: 9999,  // 启动端口
+        open: true,  // 启动后是否自动打开网页
         disableHostCheck: true
     },
-    productionSourceMap:false,
-    configureWebpack:{
-        resolve:{
-            alias:{
-                '@':path.resolve(__dirname, './src'),
-                '@i':path.resolve(__dirname, './src/assets'),
+    productionSourceMap: false,
+    configureWebpack: {
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, './src'),
+                '@i': path.resolve(__dirname, './src/assets'),
             }
         },
         plugins: [
             new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-
             // 下面是下载的插件的配置
             new CompressionWebpackPlugin({
                 algorithm: 'gzip',

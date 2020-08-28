@@ -168,7 +168,7 @@
                                 that.post_url(url, param, "登录失败！",  null, "login").then(res => {
                                     that.loading = false;
                                     if (res != null && res.headers.code == global.errorCode.SUCCESS) {
-                                        that.$store.commit("header/setHeadUrl", this.getPath() + ":" + this.getPort() + res.data.iconUrl);
+                                        that.$store.commit("header/setHeadUrl", this.getLocation() + res.data.iconUrl);
                                         if (that.remPs == true) {
                                             let obj = new Array()
                                             obj.push({

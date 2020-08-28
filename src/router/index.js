@@ -10,7 +10,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-const goods = () => import('../views/Goods')
+const material = () => import('../views/Material')
 const userInfo = () => import('../views/UserInfo')
 const authority = () => import('../views/Authority')
 const login = () => import('../views/Login')
@@ -60,12 +60,12 @@ const routes = [
                 component: authority
             },
             { //物品管理
-                path: '/goods',
+                path: '/material',
                 meta: {
                     name: '物品管理',
-                    comp: 'goods'
+                    comp: 'material'
                 },
-                component: goods
+                component: material
             },
             { //修改密码
                 path: '/homeUpdatePass',

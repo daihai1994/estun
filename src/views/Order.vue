@@ -3,10 +3,10 @@
         <!--工具条-->
         <el-col :span="24"  style="padding-bottom: 0;">
             <el-form :inline="true" :model="filters" >
-<!--                <el-form-item prop="goodsId">-->
-<!--                    <el-select v-model="filters.goodsId" filterable placeholder="请选择物品" style="width: 150px">-->
+<!--                <el-form-item prop="materialId">-->
+<!--                    <el-select v-model="filters.materialId" filterable placeholder="请选择物品" style="width: 150px">-->
 <!--                        <el-option-->
-<!--                                v-for="item in goodsAllList"-->
+<!--                                v-for="item in materialAllList"-->
 <!--                                :key="item.id"-->
 <!--                                :label="item.name"-->
 <!--                                :value="item.id">-->
@@ -91,38 +91,38 @@
                                                 <span style="font-size: 20px;color: #409EFF">物品信息</span>
                                                 <el-form label-position="left" inline class="demo-table-expand">
                                                     <el-form-item label="物品名称">
-                                                        <span>{{ dataInfo.row.goods.name }}</span>
+                                                        <span>{{ dataInfo.row.material.name }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="计量单位">
-                                                        <span>{{ dataInfo.row.goods.unit }}</span>
+                                                        <span>{{ dataInfo.row.material.unit }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="规格型号">
-                                                        <span>{{ dataInfo.row.goods.type }}</span>
+                                                        <span>{{ dataInfo.row.material.type }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="尺寸">
-                                                        <span>{{ dataInfo.row.goods.size }}</span>
+                                                        <span>{{ dataInfo.row.material.size }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="质量">
-                                                        <span>{{ dataInfo.row.goods.weight }}</span>
+                                                        <span>{{ dataInfo.row.material.weight }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="保存温度">
-                                                        <span>{{ dataInfo.row.goods.temperature }}</span>
+                                                        <span>{{ dataInfo.row.material.temperature }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="参考价钱(元)">
-                                                        <span>{{ dataInfo.row.goods.price }}</span>
+                                                        <span>{{ dataInfo.row.material.price }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="物品描述">
-                                                        <span>{{ dataInfo.row.goods.description }}</span>
+                                                        <span>{{ dataInfo.row.material.description }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="登记时间">
-                                                        <span>{{ dataInfo.row.goods.registerTime }}</span>
+                                                        <span>{{ dataInfo.row.material.registerTime }}</span>
                                                     </el-form-item>
                                                 </el-form>
                                             </el-col>
                                             <el-col :span="12">
                                                 <el-form label-position="left" inline class="demo-table-expand">
                                                     <viewer >
-                                                        <el-form-item v-for="item in dataInfo.row.goods.pictures">
+                                                        <el-form-item v-for="item in dataInfo.row.material.pictures">
                                                             <img :src="getImgUrl(item.url)" :key="item.url" style="width: 100px;height:100px">
                                                         </el-form-item>
                                                     </viewer>
@@ -165,12 +165,12 @@
                             </template>
                         </el-table-column>
                         <el-table-column
-                                prop="goods.name"
+                                prop="material.name"
                                 sortable
                                 label="物品">
                         </el-table-column>
                         <el-table-column
-                                prop="goods.unit"
+                                prop="material.unit"
                                 sortable
                                 label="单位">
                         </el-table-column>
@@ -286,12 +286,12 @@
                             highlight-current-row
                             style="width: 100%;font-size: 10px">
                         <el-table-column
-                                prop="goods.name"
+                                prop="material.name"
                                 label="物品"
                                 width="80">
                         </el-table-column>
                         <el-table-column
-                                prop="goods.unit"
+                                prop="material.unit"
                                 label="单位"
                                 width="50">
                         </el-table-column>
@@ -356,7 +356,7 @@
             <el-form :model="addForm" label-width="100px"  ref="addForm">
                 <el-form-item label="订单号" >
                     <el-input v-model="addForm.orderNumber" style="width:217px;margin-right: 10px " disabled auto-complete="off" ></el-input>
-                    <el-button type="primary" @click="openGoodsDrawer">新增商品</el-button>
+                    <el-button type="primary" @click="openMaterialDrawer">新增商品</el-button>
                 </el-form-item>
                 <el-form-item label="申请原因" >
                     <el-input type="textarea" style="width:325px;margin-right: 10px " v-model="addForm.reason" auto-complete="off" rows="2"></el-input>
@@ -386,7 +386,7 @@
                         highlight-current-row
                         style="width: 100%;">
                     <el-table-column
-                            prop="goodsName"
+                            prop="materialName"
                             label="物品">
                     </el-table-column>
                     <el-table-column
@@ -428,10 +428,10 @@
                 ref="drawer">
             <div>
                 <el-form :model="addFormDrawer" :rules="addFormDrawerRules" ref="addFormDrawer" label-width="100px" style="margin: 50px">
-                    <el-form-item label="物品" prop="goodsId">
-                        <el-select v-model="addFormDrawer.goodsId"  filterable placeholder="请选择">
+                    <el-form-item label="物品" prop="materialId">
+                        <el-select v-model="addFormDrawer.materialId"  filterable placeholder="请选择">
                             <el-option
-                                    v-for="item in goodsList"
+                                    v-for="item in materialList"
                                     :key="item.id"
                                     :label="item.name"
                                     :value="item.id">
@@ -484,10 +484,10 @@
         <!--更新界面-->
         <el-dialog title="修改订单" :visible.sync="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" :rules="editFormRules"  ref="editForm" label-width="100px" >
-                <el-form-item label="物品" prop="goodsId">
-                    <el-select v-model="editForm.goodsId"  filterable placeholder="请选择">
+                <el-form-item label="物品" prop="materialId">
+                    <el-select v-model="editForm.materialId"  filterable placeholder="请选择">
                         <el-option
-                                v-for="item in goodsList"
+                                v-for="item in materialList"
                                 :key="item.id"
                                 :label="item.name"
                                 :value="item.id">
@@ -565,14 +565,14 @@
                 editLoading: false,//编辑提交等待页面
                 printingVisible: false,//打印页面
                 addFormDrawerRules: {
-                     goodsId: [{ required: true, message: '请选择物品', trigger: 'change' },],
+                     materialId: [{ required: true, message: '请选择物品', trigger: 'change' },],
                     quantity: [{ validator:quantity, trigger: 'blur' },],
                     reason: [{ required: true, message: '请输入申请原因', trigger: 'blur' },],
                     timeArrival: [{ required: true, message: '请输入要求到货时间', trigger: 'change' },],
                     consigneeId: [{ required: true, message: '请选择物品', trigger: 'change' },],
                 },
                 editFormRules: {
-                    goodsId: [{ required: true, message: '请选择物品', trigger: 'change' },],
+                    materialId: [{ required: true, message: '请选择物品', trigger: 'change' },],
                     quantity: [{ validator:quantity, trigger: 'blur' },],
                     reason: [{ required: true, message: '请输入申请原因', trigger: 'blur' },],
                     timeArrival: [{ required: true, message: '请输入要求到货时间', trigger: 'change' },],
@@ -588,9 +588,9 @@
                 },
                 addFormDrawer:{
                     uuid:"",//随机生成ID
-                    goodsId:null,//物品Id
+                    materialId:null,//物品Id
                     supplierId:null,//供应商Id
-                    goodsName:'',//物品名称
+                    materialName:'',//物品名称
                     supplierName:'',//供应商名称
                     brand:'',//品牌
                     quantity:1,//数量
@@ -603,7 +603,7 @@
                 },
                 //编辑界面数据
                 editForm: {
-                    goodsId: '',//物品ID
+                    materialId: '',//物品ID
                     supplierId:0,//供货商ID
                     brand:'',//品牌
                     quantity:1,//数量
@@ -617,7 +617,7 @@
                 //筛选条件
                 filters: {
                     orderNumber:'',//订单号
-                    goodsId: 0,//商品ID
+                    materialId: 0,//商品ID
                     applicantId:'',//申请人
                     approverId:'',//审批人
                     startTime:'',//开始时间
@@ -635,8 +635,8 @@
                     }
                 },
                 currentRow:{},//行数据
-                goodsList:[],//物品选择
-                goodsAllList:[],//物品全部选择
+                materialList:[],//物品选择
+                materialAllList:[],//物品全部选择
                 statusList:[],//状态表信息
                 supplierList:[],//仓库选择
                 consigneeInfoList:[],//收货人全部list
@@ -653,7 +653,7 @@
             this.filters.times.push(timestampBt);
             this.filters.times.push(timestampEt);
             this.searchStatus();
-            this.searchGoodsList();
+            this.searchMaterialList();
             this.searchSupplierList();
             this.search();
         },
@@ -700,7 +700,7 @@
                 console.info("订单明细物品的编辑",row);
                 this.editFormVisible = true;
                 this.editForm = {
-                    goodsId: row.goodsId,//物品ID
+                    materialId: row.materialId,//物品ID
                     supplierId:row.supplierId,//供货商ID
                     brand:row.brand,//品牌
                     quantity:row.quantity,//数量
@@ -761,8 +761,8 @@
             //初始化新增物品信息
             initDrawerInfo(){
                 this.addFormDrawer.uuid= '';
-                this.addFormDrawer.goodsId= '';
-                this.addFormDrawer.goodsName='';
+                this.addFormDrawer.materialId= '';
+                this.addFormDrawer.materialName='';
                 this.addFormDrawer.supplierId= '';
                 this.addFormDrawer.supplierName='';
                 this.addFormDrawer.brand='';//品牌
@@ -786,7 +786,7 @@
 
             },
             //新增商品按钮
-            openGoodsDrawer(){
+            openMaterialDrawer(){
                 this.drawerDialog = true;
                 this.initDrawerInfo();
 
@@ -796,8 +796,8 @@
                 console.info("编辑按钮",row);
                 this.drawerDialog = true;
                 this.addFormDrawer.uuid= row.uuid;
-                this.addFormDrawer.goodsId= row.goodsId;
-                this.addFormDrawer.goodsName=row.goodsName;
+                this.addFormDrawer.materialId= row.materialId;
+                this.addFormDrawer.materialName=row.materialName;
                 this.addFormDrawer.supplierId= row.supplierId;
                 this.addFormDrawer.supplierName=row.supplierName;
                 this.addFormDrawer.brand=row.brand;//品牌
@@ -842,14 +842,14 @@
                             this.addFormDrawer.supplierName = obj.name;
                         }
                         obj = {};
-                        for(let i = 0;i<this.goodsList.length;i++){
-                            if(this.goodsList[i].id ==this.addFormDrawer.goodsId){
-                                obj = this.goodsList[i];
+                        for(let i = 0;i<this.materialList.length;i++){
+                            if(this.materialList[i].id ==this.addFormDrawer.materialId){
+                                obj = this.materialList[i];
                                 break;
                             }
                         }
                         console.info("物品选择改变事件",obj);
-                        this.addFormDrawer.goodsName = obj.name;
+                        this.addFormDrawer.materialName = obj.name;
 
                         obj = {};
                         for(let i = 0;i<this.consigneeInfoList.length;i++){
@@ -862,8 +862,8 @@
                         this.addFormDrawer.consignee = obj.name;
                         this.addFormDrawer.phone = obj.phone;
                         this.addFormDrawer.addressShipping = obj.address;
-                        object.goodsId = this.addFormDrawer.goodsId;
-                        object.goodsName = this.addFormDrawer.goodsName;
+                        object.materialId = this.addFormDrawer.materialId;
+                        object.materialName = this.addFormDrawer.materialName;
                         object.supplierId = this.addFormDrawer.supplierId;
                         object.supplierName = this.addFormDrawer.supplierName;
                         object.brand = this.addFormDrawer.brand;
@@ -1003,12 +1003,12 @@
                 });
             },
             //查询全部物品
-            searchGoodsList:function(){
+            searchMaterialList:function(){
                 let that = this;
-                let url = "/goods/searchAllGoods";
+                let url = "/material/searchAllMaterial";
                 let param = {
                 };
-                that.goodsList = [];
+                that.materialList = [];
                 this.post_url(url, param, "查询全部物品失败！", null).then(function (res) {
                     console.info("查询全部物品返回体",res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
@@ -1018,9 +1018,9 @@
                         };
                         let allList = JSON.parse(JSON.stringify(res.data));
                         allList.unshift(all);
-                        that.goodsAllList = allList;
+                        that.materialAllList = allList;
                         console.info("全部list",allList);
-                        that.goodsList = res.data;
+                        that.materialList = res.data;
                     }
 
                 }).catch(()=>{
@@ -1033,7 +1033,7 @@
                 let url = "/purchase/searchStatus";
                 let param = {
                 };
-                that.goodsList = [];
+                that.materialList = [];
                 this.post_url(url, param, "查询全部状态失败！", null).then(function (res) {
                     console.info("查询全部状态返回体",res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
@@ -1073,7 +1073,7 @@
                 let url = "/purchase/searchPurchase";
                 that.currentRow = {};
                 let param = {
-                    goodsId:that.filters.goodsId,//物品ID
+                    materialId:that.filters.materialId,//物品ID
                     applicantId:that.filters.applicantId,//申请人
                     approverId:that.filters.approverId,//审批人
                     startTime:that.filters.startTime,//开始时间
@@ -1114,7 +1114,7 @@
             //重置
             btnReset() {
                 this.filters = {
-                    goodsId: 0,
+                    materialId: 0,
                     warehouseId:0,
                 };
                 this.search();

@@ -60,12 +60,12 @@
       ]
     },
     {
-      "icon": "goods.png",
+      "icon": "material.png",
       "title": "物品管理",
       "child": [
         {
           "title": "物品管理",
-          "path": "/goods"
+          "path": "/material"
         }
       ]
     },

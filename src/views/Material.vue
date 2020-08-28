@@ -7,13 +7,13 @@
                 <span style="font-size: 20px;">物品大类</span>
                 <!--工具条-->
                 <el-col :span="24" style="padding-bottom: 0;margin-top: 15px;padding-left: 0;padding-right: 0">
-                    <el-form :inline="true" :model="goodsCategory">
+                    <el-form :inline="true" :model="materialCategory">
                         <el-form-item prop="name" style="margin-right: 10px">
-                            <el-input v-model="goodsCategory.name" placeholder="名称" style="width: 150px"
-                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchGoodsCategory"></el-input>
+                            <el-input v-model="materialCategory.name" placeholder="名称" style="width: 150px"
+                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchMaterialCategory"></el-input>
                         </el-form-item>
                         <el-form-item prop="effective" style="margin-right: 10px">
-                            <el-select v-model="goodsCategory.effective" placeholder="请选择" style="width: 100px" @change="btnSearchGoodsCategory">
+                            <el-select v-model="materialCategory.effective" placeholder="请选择" style="width: 100px" @change="btnSearchMaterialCategory">
                                 <el-option
                                         v-for="item in options"
                                         :key="item.value"
@@ -23,28 +23,28 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item style="margin-right: 5px">
-                            <el-button type="primary" @click.native="btnSearchGoodsCategory" :loading="false"
+                            <el-button type="primary" @click.native="btnSearchMaterialCategory" :loading="false"
                                        style="margin-right: 10px;">搜索
                             </el-button>
-                            <el-dropdown split-button type="primary" @click="btnNewGoodsCategory" trigger="click"
+                            <el-dropdown split-button type="primary" @click="btnNewMaterialCategory" trigger="click"
                                          style="width:100px ">
                                 新增
                                 <el-dropdown-menu slot="dropdown" trigger="click">
-                                    <el-dropdown-item @click.native="btnEditGoodsCategory">编辑</el-dropdown-item>
-                                    <el-dropdown-item @click.native="btnDeleteGoodsCategory">删除</el-dropdown-item>
+                                    <el-dropdown-item @click.native="btnEditMaterialCategory">编辑</el-dropdown-item>
+                                    <el-dropdown-item @click.native="btnDeleteMaterialCategory">删除</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </el-form-item>
                     </el-form>
                 </el-col>
                 <el-table
-                        ref="goodsCategory"
-                        :data="goodsCategoryData"
+                        ref="materialCategory"
+                        :data="materialCategoryData"
                         :header-cell-style="tableHeaderColor"
                         border
                         highlight-current-row
-                        @current-change="rowChangeGoodsCategoryData"
-                        style="width: 100%;" :v-loading="goodsCategoryLoading">
+                        @current-change="rowChangeMaterialCategoryData"
+                        style="width: 100%;" :v-loading="materialCategoryLoading">
                     <el-table-column
                             prop="name"
                             sortable
@@ -59,38 +59,38 @@
                 <!--分页工具条-->
                 <el-col :span="24">
                     <el-pagination small layout="total, sizes, prev, pager, next, jumper"
-                                   @size-change="handleSizeChangeGoodsCategory"
-                                   @current-change="handleCurrentChangeGoodsCategory"
+                                   @size-change="handleSizeChangeMaterialCategory"
+                                   @current-change="handleCurrentChangeMaterialCategory"
                                    :page-sizes="[10, 20, 50, 100]"
-                                   :page-size="pageSizeGoodsCategory"
-                                   :total="tableLengthGoodsCategory" style="float:right;">
+                                   :page-size="pageSizeMaterialCategory"
+                                   :total="tableLengthMaterialCategory" style="float:right;">
                     </el-pagination>
                 </el-col>
             </el-col>
             <!-- ************************************物品大类新增*************************************************** -->
-            <el-dialog title="新增物品大类" :visible.sync="addFormVisibleGoodsCategory" :close-on-click-modal="false">
-                <el-form :model="addFormGoodsCategory" label-width="100px" :rules="addFormGoodsCategoryRules"
-                         ref="addFormGoodsCategory">
+            <el-dialog title="新增物品大类" :visible.sync="addFormVisibleMaterialCategory" :close-on-click-modal="false">
+                <el-form :model="addFormMaterialCategory" label-width="100px" :rules="addFormMaterialCategoryRules"
+                         ref="addFormMaterialCategory">
                     <el-form-item label="类别名称" prop="name">
-                        <el-input v-model="addFormGoodsCategory.name" auto-complete="off"></el-input>
+                        <el-input v-model="addFormMaterialCategory.name" auto-complete="off"></el-input>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click.native="addFormVisibleGoodsCategory = false">取消</el-button>
-                    <el-button type="primary" @click.native="addSubmitGoodsCategory" :loading="addLoadingGoodsCategory">
+                    <el-button @click.native="addFormVisibleMaterialCategory = false">取消</el-button>
+                    <el-button type="primary" @click.native="addSubmitMaterialCategory" :loading="addLoadingMaterialCategory">
                         提交
                     </el-button>
                 </div>
             </el-dialog>
             <!-- ************************************物品大类编辑*************************************************** -->
-            <el-dialog title="编辑物品大类" :visible.sync="editFormVisibleGoodsCategory" :close-on-click-modal="false">
-                <el-form :model="editFormGoodsCategory" label-width="100px" :rules="editFormGoodsCategoryRules"
-                         ref="editFormGoodsCategory">
+            <el-dialog title="编辑物品大类" :visible.sync="editFormVisibleMaterialCategory" :close-on-click-modal="false">
+                <el-form :model="editFormMaterialCategory" label-width="100px" :rules="editFormMaterialCategoryRules"
+                         ref="editFormMaterialCategory">
                     <el-form-item label="类别名称" prop="name">
-                        <el-input v-model="editFormGoodsCategory.name" auto-complete="off"></el-input>
+                        <el-input v-model="editFormMaterialCategory.name" auto-complete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="是否有效" prop="role_id">
-                        <el-select v-model="editFormGoodsCategory.effective" placeholder="请选择">
+                        <el-select v-model="editFormMaterialCategory.effective" placeholder="请选择">
                             <el-option
                                     v-for="item in effectiveList"
                                     :key="item.value"
@@ -101,9 +101,9 @@
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click.native="editFormVisibleGoodsCategory = false">取消</el-button>
-                    <el-button type="primary" @click.native="editSubmitGoodsCategory"
-                               :loading="editLoadingGoodsCategory">
+                    <el-button @click.native="editFormVisibleMaterialCategory = false">取消</el-button>
+                    <el-button type="primary" @click.native="editSubmitMaterialCategory"
+                               :loading="editLoadingMaterialCategory">
                         提交
                     </el-button>
                 </div>
@@ -112,13 +112,13 @@
                 <!-- ************************************物品子类*************************************************** -->
                 <span style="font-size: 20px;">物品子类</span>
                 <el-col :span="24" style="padding-bottom: 0;margin-top: 15px;padding-left: 0;padding-right: 0">
-                    <el-form :inline="true" :model="goodsSubCategory">
+                    <el-form :inline="true" :model="materialSubCategory">
                         <el-form-item prop="name" style="margin-right: 10px">
-                            <el-input v-model="goodsSubCategory.name" placeholder="名称" style="width: 150px"
-                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchGoodsSubCategory"></el-input>
+                            <el-input v-model="materialSubCategory.name" placeholder="名称" style="width: 150px"
+                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchMaterialSubCategory"></el-input>
                         </el-form-item>
                         <el-form-item prop="effective" style="margin-right: 10px">
-                            <el-select v-model="goodsSubCategory.effective" placeholder="请选择" style="width: 100px" @change="btnSearchGoodsSubCategory">
+                            <el-select v-model="materialSubCategory.effective" placeholder="请选择" style="width: 100px" @change="btnSearchMaterialSubCategory">
                                 <el-option
                                         v-for="item in options"
                                         :key="item.value"
@@ -128,27 +128,27 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item style="margin-right: 5px">
-                            <el-button type="primary" @click.native="btnSearchGoodsSubCategory" :loading="false"
+                            <el-button type="primary" @click.native="btnSearchMaterialSubCategory" :loading="false"
                                        style="margin-right: 10px">搜索
                             </el-button>
-                            <el-dropdown split-button type="primary" @click="btnNewGoodsSubCategory" trigger="click">
+                            <el-dropdown split-button type="primary" @click="btnNewMaterialSubCategory" trigger="click">
                                 新增
                                 <el-dropdown-menu slot="dropdown" trigger="click">
-                                    <el-dropdown-item @click.native="btnEditGoodsSubCategory">编辑</el-dropdown-item>
-                                    <el-dropdown-item @click.native="btnDeleteGoodsSubCategory">删除</el-dropdown-item>
+                                    <el-dropdown-item @click.native="btnEditMaterialSubCategory">编辑</el-dropdown-item>
+                                    <el-dropdown-item @click.native="btnDeleteMaterialSubCategory">删除</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </el-form-item>
                     </el-form>
                 </el-col>
                 <el-table
-                        ref="goodsSubCategory"
-                        :data="goodsSubCategoryData"
+                        ref="materialSubCategory"
+                        :data="materialSubCategoryData"
                         :header-cell-style="tableHeaderColor"
                         border
                         highlight-current-row
-                        @current-change="rowChangeGoodsSubCategoryData"
-                        style="width: 100%;" v-loading="goodsSubCategoryLoading">
+                        @current-change="rowChangeMaterialSubCategoryData"
+                        style="width: 100%;" v-loading="materialSubCategoryLoading">
                     <el-table-column
                             prop="name"
                             sortable
@@ -163,21 +163,21 @@
                 <!--分页工具条-->
                 <el-col :span="24">
                     <el-pagination small layout="total, sizes, prev, pager, next, jumper"
-                                   @size-change="handleSizeChangeGoodsSubCategory"
-                                   @current-change="handleCurrentChangeGoodsSubCategory"
+                                   @size-change="handleSizeChangeMaterialSubCategory"
+                                   @current-change="handleCurrentChangeMaterialSubCategory"
                                    :page-sizes="[10, 20, 50, 100]"
-                                   :page-size="pageSizeGoodsSubCategory"
-                                   :total="tableLengthGoodsSubCategory" style="float:right;">
+                                   :page-size="pageSizeMaterialSubCategory"
+                                   :total="tableLengthMaterialSubCategory" style="float:right;">
                     </el-pagination>
                 </el-col>
                 <!-- ************************************物品子类新增*************************************************** -->
-                <el-dialog title="新增物品子类" :visible.sync="addFormVisibleGoodsSubCategory" :close-on-click-modal="false">
-                    <el-form :model="addFormGoodsSubCategory" label-width="100px" :rules="addFormGoodsSubCategoryRules"
-                             ref="addFormGoodsSubCategory">
-                        <el-form-item label="选择大类" prop="goodsCategoryId">
-                            <el-select v-model="addFormGoodsSubCategory.goodsCategoryId" filterable placeholder="请选择">
+                <el-dialog title="新增物品子类" :visible.sync="addFormVisibleMaterialSubCategory" :close-on-click-modal="false">
+                    <el-form :model="addFormMaterialSubCategory" label-width="100px" :rules="addFormMaterialSubCategoryRules"
+                             ref="addFormMaterialSubCategory">
+                        <el-form-item label="选择大类" prop="materialCategoryId">
+                            <el-select v-model="addFormMaterialSubCategory.materialCategoryId" filterable placeholder="请选择">
                                 <el-option
-                                        v-for="item in goodsCategoryList"
+                                        v-for="item in materialCategoryList"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
@@ -185,25 +185,25 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="子类名称" prop="name">
-                            <el-input v-model="addFormGoodsSubCategory.name" auto-complete="off"></el-input>
+                            <el-input v-model="addFormMaterialSubCategory.name" auto-complete="off"></el-input>
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
-                        <el-button @click.native="addFormVisibleGoodsSubCategory = false">取消</el-button>
-                        <el-button type="primary" @click.native="addSubmitGoodsSubCategory"
-                                   :loading="addLoadingGoodsSubCategory">提交
+                        <el-button @click.native="addFormVisibleMaterialSubCategory = false">取消</el-button>
+                        <el-button type="primary" @click.native="addSubmitMaterialSubCategory"
+                                   :loading="addLoadingMaterialSubCategory">提交
                         </el-button>
                     </div>
                 </el-dialog>
                 <!-- ************************************物品子类编辑*************************************************** -->
-                <el-dialog title="编辑物品子类" :visible.sync="editFormVisibleGoodsSubCategory" :close-on-click-modal="false">
-                    <el-form :model="editFormGoodsSubCategory" label-width="100px"
-                             :rules="editFormGoodsSubCategoryRules"
-                             ref="editFormGoodsSubCategory">
-                        <el-form-item label="选择大类" prop="goodsCategoryId">
-                            <el-select v-model="editFormGoodsSubCategory.goodsCategoryId" filterable placeholder="请选择">
+                <el-dialog title="编辑物品子类" :visible.sync="editFormVisibleMaterialSubCategory" :close-on-click-modal="false">
+                    <el-form :model="editFormMaterialSubCategory" label-width="100px"
+                             :rules="editFormMaterialSubCategoryRules"
+                             ref="editFormMaterialSubCategory">
+                        <el-form-item label="选择大类" prop="materialCategoryId">
+                            <el-select v-model="editFormMaterialSubCategory.materialCategoryId" filterable placeholder="请选择">
                                 <el-option
-                                        v-for="item in goodsCategoryList"
+                                        v-for="item in materialCategoryList"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
@@ -211,10 +211,10 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="子类名称" prop="name">
-                            <el-input v-model="editFormGoodsSubCategory.name" auto-complete="off"></el-input>
+                            <el-input v-model="editFormMaterialSubCategory.name" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="是否有效" prop="role_id">
-                            <el-select v-model="editFormGoodsSubCategory.effective" placeholder="请选择">
+                            <el-select v-model="editFormMaterialSubCategory.effective" placeholder="请选择">
                                 <el-option
                                         v-for="item in effectiveList"
                                         :key="item.value"
@@ -225,9 +225,9 @@
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
-                        <el-button @click.native="editFormVisibleGoodsSubCategory = false">取消</el-button>
-                        <el-button type="primary" @click.native="editSubmitGoodsSubCategory"
-                                   :loading="editLoadingGoodsSubCategory">提交
+                        <el-button @click.native="editFormVisibleMaterialSubCategory = false">取消</el-button>
+                        <el-button type="primary" @click.native="editSubmitMaterialSubCategory"
+                                   :loading="editLoadingMaterialSubCategory">提交
                         </el-button>
                     </div>
                 </el-dialog>
@@ -236,17 +236,17 @@
                 <!-- ************************************物品*************************************************** -->
                 <span style="font-size: 20px;">物品</span>
                 <el-col :span="24" style="padding-bottom: 0;margin-top: 15px;padding-left: 0;padding-right: 0">
-                    <el-form :inline="true" :model="goods" class="user_form">
+                    <el-form :inline="true" :model="material" class="user_form">
                         <el-form-item prop="name" style="margin-right: 10px">
-                            <el-input v-model="goods.name" placeholder="名称" style="width: 150px"
-                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchGoods"></el-input>
+                            <el-input v-model="material.name" placeholder="名称" style="width: 150px"
+                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchMaterial"></el-input>
                         </el-form-item>
                         <el-form-item prop="abbreviation" style="margin-right: 10px">
-                            <el-input v-model="goods.abbreviation" placeholder="简称" style="width: 150px"
-                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchGoods"></el-input>
+                            <el-input v-model="material.abbreviation" placeholder="简称" style="width: 150px"
+                                      prefix-icon="el-icon-search" @keyup.enter.native="btnSearchMaterial"></el-input>
                         </el-form-item>
                         <el-form-item prop="effective" style="margin-right: 10px">
-                            <el-select v-model="goods.effective" placeholder="请选择" style="width: 100px" @change="btnSearchGoods">
+                            <el-select v-model="material.effective" placeholder="请选择" style="width: 100px" @change="btnSearchMaterial">
                                 <el-option
                                         v-for="item in options"
                                         :key="item.value"
@@ -256,26 +256,26 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item style="margin-right: 10px">
-                            <el-button type="primary" @click.native="btnSearchGoods" :loading="false"
+                            <el-button type="primary" @click.native="btnSearchMaterial" :loading="false"
                                        style="margin-right: 10px">搜索
                             </el-button>
-                            <el-dropdown split-button type="primary" @click="btnNewGoods" trigger="click">
+                            <el-dropdown split-button type="primary" @click="btnNewMaterial" trigger="click">
                                 新增
                                 <el-dropdown-menu slot="dropdown" trigger="click">
-                                    <el-dropdown-item @click.native="btnEditGoods">编辑</el-dropdown-item>
-                                    <el-dropdown-item @click.native="btnDeleteGoods">删除</el-dropdown-item>
+                                    <el-dropdown-item @click.native="btnEditMaterial">编辑</el-dropdown-item>
+                                    <el-dropdown-item @click.native="btnDeleteMaterial">删除</el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </el-form-item>
                     </el-form>
                 </el-col>
                 <el-table
-                        :data="goodsData"
+                        :data="materialData"
                         :header-cell-style="tableHeaderColor"
                         border
                         highlight-current-row
-                        @current-change="rowChangeGoodsData"
-                        style="width: 100%;" v-loading="goodsLoading">
+                        @current-change="rowChangeMaterialData"
+                        style="width: 100%;" v-loading="materialLoading">
                     <el-table-column type="expand">
                         <template slot-scope="props">
                             <el-form label-position="left" inline class="demo-table-expand">
@@ -338,31 +338,31 @@
                 <!--分页工具条-->
                 <el-col :span="24">
                     <el-pagination small layout="total, sizes, prev, pager, next, jumper"
-                                   @size-change="handleSizeChangeGoods"
-                                   @current-change="handleCurrentChangeGoods"
+                                   @size-change="handleSizeChangeMaterial"
+                                   @current-change="handleCurrentChangeMaterial"
                                    :page-sizes="[10, 20, 50, 100]"
-                                   :page-size="pageSizeGoods"
-                                   :total="tableLengthGoods" style="float:right;">
+                                   :page-size="pageSizeMaterial"
+                                   :total="tableLengthMaterial" style="float:right;">
                     </el-pagination>
                 </el-col>
                 <!-- ************************************物品新增*************************************************** -->
-                <el-dialog title="新增物品" :visible.sync="addFormVisibleGoods" :close-on-click-modal="false">
-                    <el-form :model="addFormGoods" label-width="100px" :rules="addFormGoodsRules" ref="addFormGoods">
-                        <el-form-item label="选择大类" prop="goodsCategoryId">
-                            <el-select v-model="addFormGoods.goodsCategoryId" filterable placeholder="请选择"
-                                       @change="goodsCategoryChange">
+                <el-dialog title="新增物品" :visible.sync="addFormVisibleMaterial" :close-on-click-modal="false">
+                    <el-form :model="addFormMaterial" label-width="100px" :rules="addFormMaterialRules" ref="addFormMaterial">
+                        <el-form-item label="选择大类" prop="materialCategoryId">
+                            <el-select v-model="addFormMaterial.materialCategoryId" filterable placeholder="请选择"
+                                       @change="materialCategoryChange">
                                 <el-option
-                                        v-for="item in goodsCategoryList"
+                                        v-for="item in materialCategoryList"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="选择子类" prop="goodsSubCategoryId">
-                            <el-select v-model="addFormGoods.goodsSubCategoryId" filterable placeholder="请选择">
+                        <el-form-item label="选择子类" prop="materialSubCategoryId">
+                            <el-select v-model="addFormMaterial.materialSubCategoryId" filterable placeholder="请选择">
                                 <el-option
-                                        v-for="item in goodsSubCategoryList"
+                                        v-for="item in materialSubCategoryList"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
@@ -370,45 +370,45 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="物品全称" prop="name">
-                            <el-input v-model="addFormGoods.name" auto-complete="off"></el-input>
+                            <el-input v-model="addFormMaterial.name" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="物品简称" prop="abbreviation">
-                            <el-input v-model="addFormGoods.abbreviation" auto-complete="off"></el-input>
+                            <el-input v-model="addFormMaterial.abbreviation" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="计量单位" prop="unit">
-                            <el-input v-model="addFormGoods.unit" auto-complete="off"></el-input>
+                            <el-input v-model="addFormMaterial.unit" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="规格型号" prop="type">
-                            <el-input v-model="addFormGoods.type" auto-complete="off"></el-input>
+                            <el-input v-model="addFormMaterial.type" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="尺寸" prop="size">
-                            <el-input v-model="addFormGoods.size" auto-complete="off"></el-input>
+                            <el-input v-model="addFormMaterial.size" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="质量" prop="weight">
-                            <el-input type="number" v-model.number="addFormGoods.weight" auto-complete="off"></el-input>
+                            <el-input type="number" v-model.number="addFormMaterial.weight" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="保存温度" prop="temperature">
-                            <el-input type="number" v-model.number="addFormGoods.temperature"
+                            <el-input type="number" v-model.number="addFormMaterial.temperature"
                                       auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="参考报价" prop="price">
-                            <el-input type="number" v-model.number="addFormGoods.price" auto-complete="off"></el-input>
+                            <el-input type="number" v-model.number="addFormMaterial.price" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="物品描述" prop="description">
-                            <el-input v-model="addFormGoods.description" auto-complete="off"></el-input>
+                            <el-input v-model="addFormMaterial.description" auto-complete="off"></el-input>
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
-                        <el-button @click.native="addFormVisibleGoods = false">取消</el-button>
-                        <el-button type="primary" @click.native="addSubmitGoods" :loading="addLoadingGoods">提交
+                        <el-button @click.native="addFormVisibleMaterial = false">取消</el-button>
+                        <el-button type="primary" @click.native="addSubmitMaterial" :loading="addLoadingMaterial">提交
                         </el-button>
                     </div>
                 </el-dialog>
                 <!-- ************************************物品编辑*************************************************** -->
-                <el-dialog title="编辑物品" :visible.sync="editFormVisibleGoods" :close-on-click-modal="false">
-                    <el-form :model="editFormGoods" label-width="100px" :rules="editFormGoodsRules" ref="editFormGoods">
+                <el-dialog title="编辑物品" :visible.sync="editFormVisibleMaterial" :close-on-click-modal="false">
+                    <el-form :model="editFormMaterial" label-width="100px" :rules="editFormMaterialRules" ref="editFormMaterial">
                         <el-form-item label="是否有效" prop="role_id">
-                            <el-select v-model="editFormGoods.effective" placeholder="请选择">
+                            <el-select v-model="editFormMaterial.effective" placeholder="请选择">
                                 <el-option
                                         v-for="item in effectiveList"
                                         :key="item.value"
@@ -417,21 +417,21 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="选择大类" prop="goodsCategoryId">
-                            <el-select v-model="editFormGoods.goodsCategoryId" filterable placeholder="请选择"
-                                       @change="goodsCategoryChangeUpdate">
+                        <el-form-item label="选择大类" prop="materialCategoryId">
+                            <el-select v-model="editFormMaterial.materialCategoryId" filterable placeholder="请选择"
+                                       @change="materialCategoryChangeUpdate">
                                 <el-option
-                                        v-for="item in goodsCategoryList"
+                                        v-for="item in materialCategoryList"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="选择子类" prop="goodsSubCategoryId">
-                            <el-select v-model="editFormGoods.goodsSubCategoryId" filterable placeholder="请选择">
+                        <el-form-item label="选择子类" prop="materialSubCategoryId">
+                            <el-select v-model="editFormMaterial.materialSubCategoryId" filterable placeholder="请选择">
                                 <el-option
-                                        v-for="item in goodsSubCategoryList"
+                                        v-for="item in materialSubCategoryList"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
@@ -439,43 +439,43 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="物品全称" prop="name">
-                            <el-input v-model="editFormGoods.name" auto-complete="off"></el-input>
+                            <el-input v-model="editFormMaterial.name" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="物品简称" prop="abbreviation">
-                            <el-input v-model="editFormGoods.abbreviation" auto-complete="off"></el-input>
+                            <el-input v-model="editFormMaterial.abbreviation" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="计量单位" prop="unit">
-                            <el-input v-model="editFormGoods.unit" auto-complete="off"></el-input>
+                            <el-input v-model="editFormMaterial.unit" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="规格型号" prop="type">
-                            <el-input v-model="editFormGoods.type" auto-complete="off"></el-input>
+                            <el-input v-model="editFormMaterial.type" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="尺寸" prop="size">
-                            <el-input v-model="editFormGoods.size" auto-complete="off"></el-input>
+                            <el-input v-model="editFormMaterial.size" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="质量" prop="weight">
-                            <el-input type="number" v-model.number="editFormGoods.weight"
+                            <el-input type="number" v-model.number="editFormMaterial.weight"
                                       auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="保存温度" prop="temperature">
-                            <el-input type="number" v-model.number="editFormGoods.temperature"
+                            <el-input type="number" v-model.number="editFormMaterial.temperature"
                                       auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="参考报价" prop="price">
-                            <el-input type="number" v-model.number="editFormGoods.price" auto-complete="off"></el-input>
+                            <el-input type="number" v-model.number="editFormMaterial.price" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="物品描述" prop="description">
-                            <el-input v-model="editFormGoods.description" auto-complete="off"></el-input>
+                            <el-input v-model="editFormMaterial.description" auto-complete="off"></el-input>
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
-                        <el-button @click.native="editFormVisibleGoods = false">取消</el-button>
-                        <el-button type="primary" @click.native="editSubmitGoods" :loading="editLoadingGoods">提交
+                        <el-button @click.native="editFormVisibleMaterial = false">取消</el-button>
+                        <el-button type="primary" @click.native="editSubmitMaterial" :loading="editLoadingMaterial">提交
                         </el-button>
                     </div>
                 </el-dialog>
                 <!-- ************************************物品图片操作*************************************************** -->
-                <el-dialog title="物品图片操作" center :visible.sync="editFormVisibleGoodsPicture"
+                <el-dialog title="物品图片操作" center :visible.sync="editFormVisibleMaterialPicture"
                            :close-on-click-modal="false"
                            width="63%" style="align-items: center">
                     <el-upload
@@ -492,7 +492,7 @@
                             list-type="picture"
                             multiple
                             :limit="limitSize"
-                            :data='pictureGoodsId'
+                            :data='pictureMaterialId'
                             :on-success="onSuccess"
                             :on-error="imgUploadError"
                             :auto-upload="false">
@@ -506,7 +506,7 @@
                              style="width: 200px;height:200px;display: inline-block;margin-left: 5px">
                                 <span class="el-image-viewer__btn"
                                       style="width: 30px;height: 30px;background: white;font-size: 30px;position:relative;right: -170px;top:30px"
-                                      @click="deleteGoodsPicture(item.id)">
+                                      @click="deleteMaterialPicture(item.id)">
                                   <i class="el-icon-circle-close"></i>
                                 </span>
                             <img :src="item.url" :key="item.url" style="width: 200px;height:200px">
@@ -547,132 +547,132 @@
     import Viewer from 'v-viewer'
 
     export default {
-        name: "Goods",
+        name: "Material",
         data() {
             return {
                 /************************物品大类**********************************/
                 //物品大类筛选类 effective 0无效 1有效 2全部
-                goodsCategory: {
+                materialCategory: {
                     name: '',
                     effective: 2
                 },
                 //物品大类数据
-                goodsCategoryData: [],
+                materialCategoryData: [],
                 //物品大类数据一共多少条
-                tableLengthGoodsCategory: 0,
+                tableLengthMaterialCategory: 0,
                 //物品大类table加载等待
-                goodsCategoryLoading: false,
+                materialCategoryLoading: false,
                 //物品大类table默认一页行数
-                pageSizeGoodsCategory: 10,
+                pageSizeMaterialCategory: 10,
                 //物品大类table默认显示第几页
-                pageGoodsCategory: 1,
+                pageMaterialCategory: 1,
                 //物品大类选中行
-                goodsCategorySelect: {},
+                materialCategorySelect: {},
                 //新增物品大类页面是否打开
-                addFormVisibleGoodsCategory: false,
+                addFormVisibleMaterialCategory: false,
                 //新增物品大类对象
-                addFormGoodsCategory: {
+                addFormMaterialCategory: {
                     name: ""
                 },
                 //新增物品大类的规则
-                addFormGoodsCategoryRules: {
+                addFormMaterialCategoryRules: {
                     name: [{required: true, message: '请输入名称', trigger: 'blur'}]
                 },
                 //提交新增物品大类等待状态
-                addLoadingGoodsCategory: false,
+                addLoadingMaterialCategory: false,
                 //修改物品大类页面是否打开
-                editFormVisibleGoodsCategory: false,
+                editFormVisibleMaterialCategory: false,
                 //修改物品大类对象
-                editFormGoodsCategory: {
+                editFormMaterialCategory: {
                     name: "",
                     id: 0,
                     effective: 0
                 },
                 //修改物品大类的规则
-                editFormGoodsCategoryRules: {
+                editFormMaterialCategoryRules: {
                     name: [{required: true, message: '请输入名称', trigger: 'blur'}]
                 },
                 //提交修改物品大类等待状态
-                editLoadingGoodsCategory: false,
+                editLoadingMaterialCategory: false,
                 /************************物品子类**********************************/
                 //物品子类筛选类 effective 0无效 1有效 2全部
-                goodsSubCategory: {
+                materialSubCategory: {
                     name: '',
                     effective: 2,
-                    goodsCategoryId: 0
+                    materialCategoryId: 0
                 },
-                goodsCategoryList: [],//物品大类，全部信息
+                materialCategoryList: [],//物品大类，全部信息
                 //物品子类数据
-                goodsSubCategoryData: [],
+                materialSubCategoryData: [],
                 //物品子类数据一共多少条
-                tableLengthGoodsSubCategory: 0,
+                tableLengthMaterialSubCategory: 0,
                 //物品子类table加载等待
-                goodsSubCategoryLoading: false,
+                materialSubCategoryLoading: false,
                 //物品子类table默认一页行数
-                pageSizeGoodsSubCategory: 10,
+                pageSizeMaterialSubCategory: 10,
                 //物品子类table默认显示第几页
-                pageGoodsSubCategory: 1,
+                pageMaterialSubCategory: 1,
                 //物品子类选中行
-                goodsSubCategorySelect: {},
+                materialSubCategorySelect: {},
                 //新增物品子类页面是否打开
-                addFormVisibleGoodsSubCategory: false,
+                addFormVisibleMaterialSubCategory: false,
                 //新增物品子类对象
-                addFormGoodsSubCategory: {
+                addFormMaterialSubCategory: {
                     name: "",
-                    goodsCategoryId: 0
+                    materialCategoryId: 0
                 },
                 //新增物品子类的规则
-                addFormGoodsSubCategoryRules: {
+                addFormMaterialSubCategoryRules: {
                     name: [{required: true, message: '请输入名称', trigger: 'blur'}]
                 },
                 //提交新增物品子类等待状态
-                addLoadingGoodsSubCategory: false,
+                addLoadingMaterialSubCategory: false,
                 //修改物品子类页面是否打开
-                editFormVisibleGoodsSubCategory: false,
+                editFormVisibleMaterialSubCategory: false,
                 //修改物品子类对象
-                editFormGoodsSubCategory: {
+                editFormMaterialSubCategory: {
                     name: "",
                     id: 0,
                     effective: 0,
-                    goodsCategory: 0
+                    materialCategory: 0
                 },
                 //修改物品子类的规则
-                editFormGoodsSubCategoryRules: {
+                editFormMaterialSubCategoryRules: {
                     name: [{required: true, message: '请输入名称', trigger: 'blur'}]
                 },
                 //提交修改物品子类等待状态
-                editLoadingGoodsSubCategory: false,
+                editLoadingMaterialSubCategory: false,
                 /************************物品**********************************/
                 //物品子类全部信息
-                goodsSubCategoryList: [],
+                materialSubCategoryList: [],
                 //物品筛选类 effective 0无效 1有效 2全部
-                goods: {
+                material: {
                     name: '',
                     abbreviation: '',//简称
                     effective: 2,
-                    goodsSubCategoryId: 0
+                    materialSubCategoryId: 0
                 },
                 //物品数据
-                goodsData: [],
+                materialData: [],
                 //物品数据一共多少条
-                tableLengthGoods: 0,
+                tableLengthMaterial: 0,
                 //物品table加载等待
-                goodsLoading: false,
+                materialLoading: false,
                 //物品table默认一页行数
-                pageSizeGoods: 10,
+                pageSizeMaterial: 10,
                 //物品table默认显示第几页
-                pageGoods: 1,
+                pageMaterial: 1,
                 //物品选中行
-                goodsSelect: {},
+                materialSelect: {},
                 //新增物品页面是否打开
-                addFormVisibleGoods: false,
+                addFormVisibleMaterial: false,
                 //物品图片操作
-                editFormVisibleGoodsPicture: false,
+                editFormVisibleMaterialPicture: false,
                 //新增物品对象
-                addFormGoods: {
+                addFormMaterial: {
                     name: "",
-                    goodsCategoryId: 0,
-                    goodsSubCategoryId: 0,
+                    materialCategoryId: 0,
+                    materialSubCategoryId: 0,
                     abbreviation: "",
                     unit: "",
                     type: "",
@@ -683,10 +683,10 @@
                     description: "",
                 },
                 //新增物品的规则
-                addFormGoodsRules: {
+                addFormMaterialRules: {
                     name: [{required: true, message: '请输入名称', trigger: 'blur'}],
-                    goodsCategoryId: [{required: true, message: '请选择大类', trigger: 'change'}],
-                    goodsSubCategoryId: [{required: true, message: '请选择子类', trigger: 'change'}],
+                    materialCategoryId: [{required: true, message: '请选择大类', trigger: 'change'}],
+                    materialSubCategoryId: [{required: true, message: '请选择子类', trigger: 'change'}],
                     abbreviation: [{required: true, message: '请输入简称', trigger: 'blur'}],
                     unit: [{required: true, message: '请输入计量单位', trigger: 'blur'}],
                     type: [{required: true, message: '请输入规格型号', trigger: 'blur'}],
@@ -698,15 +698,15 @@
 
                 },
                 //提交新增物品等待状态
-                addLoadingGoods: false,
+                addLoadingMaterial: false,
                 //修改物品页面是否打开
-                editFormVisibleGoods: false,
+                editFormVisibleMaterial: false,
                 //修改物品对象
-                editFormGoods: {
+                editFormMaterial: {
                     id: 0,
                     name: "",
-                    goodsCategoryId: 0,
-                    goodsSubCategoryId: 0,
+                    materialCategoryId: 0,
+                    materialSubCategoryId: 0,
                     abbreviation: "",
                     unit: "",
                     type: "",
@@ -718,10 +718,10 @@
                     effective: 0,
                 },
                 //修改物品的规则
-                editFormGoodsRules: {
+                editFormMaterialRules: {
                     name: [{required: true, message: '请输入名称', trigger: 'blur'}],
-                    goodsCategoryId: [{required: true, message: '请选择大类', trigger: 'change'}],
-                    goodsSubCategoryId: [{required: true, message: '请选择子类', trigger: 'change'}],
+                    materialCategoryId: [{required: true, message: '请选择大类', trigger: 'change'}],
+                    materialSubCategoryId: [{required: true, message: '请选择子类', trigger: 'change'}],
                     abbreviation: [{required: true, message: '请输入简称', trigger: 'blur'}],
                     unit: [{required: true, message: '请输入计量单位', trigger: 'blur'}],
                     type: [{required: true, message: '请输入规格型号', trigger: 'blur'}],
@@ -732,7 +732,7 @@
                     description: [{required: true, message: '请输入物品描述', trigger: 'blur'}],
                 },
                 //提交修改物品等待状态
-                editLoadingGoods: false,
+                editLoadingMaterial: false,
                 /**********************************公共信息***************************************************/
                 //有效，无效，全部select
                 options: [{
@@ -768,7 +768,7 @@
                 //要删除的照片ID
                 pictureId: 0,
                 //新增图片按钮等待
-                addLoadingGoodsPicture: false,
+                addLoadingMaterialPicture: false,
                 //图片list
                 fileList: [],
                 fileData: '',  // 文件上传数据（多文件合一）
@@ -777,8 +777,8 @@
                     "Content-Type": "multipart/form-data"
                 },
                 //图片上传的参数
-                pictureGoodsId: {
-                    goodsId: 0,
+                pictureMaterialId: {
+                    materialId: 0,
                 },
                 //图片个数限制
                 limitSize: 5,
@@ -787,7 +787,7 @@
             }
         },
         mounted() {
-            this.btnSearchGoodsCategory();
+            this.btnSearchMaterialCategory();
         },
         methods: {
             // aaa(item){
@@ -807,132 +807,132 @@
             },
             /************************物品大类**********************************/
             //查询物品大类信息
-            btnSearchGoodsCategory: function () {
+            btnSearchMaterialCategory: function () {
                 let that = this;
                 //清理物品信息
-                that.goods = {
+                that.material = {
                     name: '',
                     abbreviation: '',//简称
                     effective: 2,
-                    goodsSubCategoryId: 0
+                    materialSubCategoryId: 0
                 }
-                that.goodsData = [];
-                that.tableLengthGoods = 0;
+                that.materialData = [];
+                that.tableLengthMaterial = 0;
                 //清理物品子类信息
-                that.goodsSubCategory = {
+                that.materialSubCategory = {
                     name: '',
                     effective: 2,
-                    goodsCategoryId: 0
+                    materialCategoryId: 0
                 }
-                that.goodsSubCategoryData = [];
-                that.tableLengthGoodsSubCategory = 0;
+                that.materialSubCategoryData = [];
+                that.tableLengthMaterialSubCategory = 0;
                 //清理物品大类
-                that.goodsCategoryData = [];
-                that.tableLengthGoodsCategory = 0;
-                that.goodsCategoryLoading = true;
-                let url = "/goods/searchGoodsCategory";
+                that.materialCategoryData = [];
+                that.tableLengthMaterialCategory = 0;
+                that.materialCategoryLoading = true;
+                let url = "/material/searchMaterialCategory";
                 let param = {
-                    name: that.goodsCategory.name,
-                    effective: that.goodsCategory.effective,
-                    size: that.pageSizeGoodsCategory,// 每页的记录数（行数）
-                    page: that.pageGoodsCategory//第几条开始
+                    name: that.materialCategory.name,
+                    effective: that.materialCategory.effective,
+                    size: that.pageSizeMaterialCategory,// 每页的记录数（行数）
+                    page: that.pageMaterialCategory//第几条开始
                 }
                 this.post_url(url, param, "物品大类查询失败！", null).then(function (res) {
-                    that.goodsCategoryLoading = false;
+                    that.materialCategoryLoading = false;
                     console.info("查询物品大类返回体", res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                        that.goodsCategoryData = res.data.list;
-                        that.tableLengthGoodsCategory = res.data.total;
+                        that.materialCategoryData = res.data.list;
+                        that.tableLengthMaterialCategory = res.data.total;
                         if (res.data.total > 0) {
-                            that.$refs.goodsCategory.setCurrentRow(res.data.list[0]);
+                            that.$refs.materialCategory.setCurrentRow(res.data.list[0]);
                         }
                     }
                 }).catch(res => {
                     console.info("查询物品大类返回体报错", res);
-                    that.goodsCategoryLoading = false;
+                    that.materialCategoryLoading = false;
                 });
             },
             //打开物品大类信息新增页面
-            btnNewGoodsCategory: function () {
+            btnNewMaterialCategory: function () {
                 let that = this;
-                that.addFormVisibleGoodsCategory = true;//打开新增页面
-                that.addFormGoodsCategory = {
+                that.addFormVisibleMaterialCategory = true;//打开新增页面
+                that.addFormMaterialCategory = {
                     name: ""
                 };//重置form信息
             },
             //提交新增物品大类信息
-            addSubmitGoodsCategory: function () {
-                this.$refs.addFormGoodsCategory.validate((valid) => {
+            addSubmitMaterialCategory: function () {
+                this.$refs.addFormMaterialCategory.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            this.addLoadingGoodsCategory = true;
+                            this.addLoadingMaterialCategory = true;
                             let that = this;
-                            let url = "/goods/addGoodsCategory";//新增物品大类
-                            let param = that.addFormGoodsCategory;
+                            let url = "/material/addMaterialCategory";//新增物品大类
+                            let param = that.addFormMaterialCategory;
                             this.post_url(url, param, "新增物品大类失败！", null).then(function (res) {
-                                that.addLoadingGoodsCategory = false;
+                                that.addLoadingMaterialCategory = false;
                                 console.info("新增物品大类返回体", res);
                                 if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                     that.$message.success("新增物品大类成功");
-                                    that.addFormVisibleGoodsCategory = false;
-                                    that.btnSearchGoodsCategory();
+                                    that.addFormVisibleMaterialCategory = false;
+                                    that.btnSearchMaterialCategory();
                                 } else {
                                     that.$message.error("新增物品大类失败");
                                 }
                             }).catch(() => {
-                                that.addLoadingGoodsCategory = false
+                                that.addLoadingMaterialCategory = false
                             });
                         });
                     }
                 });
             },
             //打开物品大类信息编辑页面
-            btnEditGoodsCategory: function () {
+            btnEditMaterialCategory: function () {
                 let that = this;
-                if (this.goodsCategorySelect.name == null) {
+                if (this.materialCategorySelect.name == null) {
                     this.$alert('请选择要编辑的数据', '提示', {
                         dangerouslyUseHTMLString: true
                     });
                 } else {
-                    console.info("是否有效", this.goodsCategorySelect.effective)
-                    that.editFormVisibleGoodsCategory = true;//打开编辑页面
-                    that.editFormGoodsCategory = {
-                        name: this.goodsCategorySelect.name,//名称
-                        id: this.goodsCategorySelect.id,//主键
-                        effective: this.goodsCategorySelect.effective,//是否有效
+                    console.info("是否有效", this.materialCategorySelect.effective)
+                    that.editFormVisibleMaterialCategory = true;//打开编辑页面
+                    that.editFormMaterialCategory = {
+                        name: this.materialCategorySelect.name,//名称
+                        id: this.materialCategorySelect.id,//主键
+                        effective: this.materialCategorySelect.effective,//是否有效
                     };//重置form信息
                 }
             },
             //提交修改物品大类信息
-            editSubmitGoodsCategory: function () {
-                this.$refs.editFormGoodsCategory.validate((valid) => {
+            editSubmitMaterialCategory: function () {
+                this.$refs.editFormMaterialCategory.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            this.editLoadingGoodsCategory = true;
+                            this.editLoadingMaterialCategory = true;
                             let that = this;
-                            let url = "/goods/updateGoodsCategory";//修改物品大类
-                            let param = that.editFormGoodsCategory;
+                            let url = "/material/updateMaterialCategory";//修改物品大类
+                            let param = that.editFormMaterialCategory;
                             this.post_url(url, param, "修改物品大类失败！", null).then(function (res) {
-                                that.editLoadingGoodsCategory = false;
+                                that.editLoadingMaterialCategory = false;
                                 console.info("修改物品大类返回体", res);
                                 if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                     that.$message.success("修改物品大类成功");
-                                    that.editFormVisibleGoodsCategory = false;
-                                    that.btnSearchGoodsCategory();
+                                    that.editFormVisibleMaterialCategory = false;
+                                    that.btnSearchMaterialCategory();
                                 } else {
                                     that.$message.error("新增物品大类失败");
                                 }
                             }).catch(() => {
-                                that.editLoadingGoodsCategory = false
+                                that.editLoadingMaterialCategory = false
                             });
                         });
                     }
                 });
             },
             //删除物品大类信息
-            btnDeleteGoodsCategory: function () {
+            btnDeleteMaterialCategory: function () {
                 let that = this;
-                let ids = this.goodsCategorySelect.id;
+                let ids = this.materialCategorySelect.id;
                 if (ids == '' || ids == null) {
                     this.$alert('请选择要删除的记录', '提示', {
                         dangerouslyUseHTMLString: true
@@ -941,104 +941,104 @@
                     this.$confirm('确认删除选中记录吗？', '提示', {
                         type: 'warning'
                     }).then(() => {
-                        that.goodsCategoryLoading = true;
+                        that.materialCategoryLoading = true;
                         let param = {
-                            id: this.goodsCategorySelect.id//删除 物品大类
+                            id: this.materialCategorySelect.id//删除 物品大类
                         }
-                        let url = "/goods/deleteGoodsCategory";//删除物品大类
+                        let url = "/material/deleteMaterialCategory";//删除物品大类
                         this.post_url(url, param, "删除物品大类失败！", null).then(function (res) {
-                            that.goodsCategoryLoading = false;
+                            that.materialCategoryLoading = false;
                             console.info(res);
                             if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                 that.$message.success("删除物品大类成功");
-                                that.btnSearchGoodsCategory();
+                                that.btnSearchMaterialCategory();
                             }
                         }).catch(() => {
-                            that.goodsCategoryLoading = false;
+                            that.materialCategoryLoading = false;
                             that.$message.warning("删除物品大类失败");
                         });
                     }).catch(() => {
-                        that.goodsCategoryLoading = false;
+                        that.materialCategoryLoading = false;
                         that.$message.warning("删除物品大类失败");
                     });
                 }
             },
             //点击物品大类row触发事件
-            rowChangeGoodsCategoryData: function (row) {
+            rowChangeMaterialCategoryData: function (row) {
                 if (row != null && row.id != null) {
-                    this.goodsCategorySelect = row;
-                    this.goodsSubCategory.goodsCategoryId = row.id;
-                    this.btnSearchGoodsSubCategory();
+                    this.materialCategorySelect = row;
+                    this.materialSubCategory.materialCategoryId = row.id;
+                    this.btnSearchMaterialSubCategory();
                 }
             },
             //物品大类table改变一页多少行触发事件
-            handleSizeChangeGoodsCategory: function (size) {
-                if (size != this.pageSizeGoodsCategory) {
-                    this.pageSizeGoodsCategory = size;
-                    this.btnSearchGoodsCategory();
+            handleSizeChangeMaterialCategory: function (size) {
+                if (size != this.pageSizeMaterialCategory) {
+                    this.pageSizeMaterialCategory = size;
+                    this.btnSearchMaterialCategory();
                 }
             },
             //物品大类改变页面触发事件
-            handleCurrentChangeGoodsCategory: function (page) {
-                if (page != this.pageGoodsCategory) {
-                    this.pageGoodsCategory = page;
-                    this.btnSearchGoodsCategory();
+            handleCurrentChangeMaterialCategory: function (page) {
+                if (page != this.pageMaterialCategory) {
+                    this.pageMaterialCategory = page;
+                    this.btnSearchMaterialCategory();
                 }
             },
             /************************物品子类**********************************/
             //物品子类的查询
-            btnSearchGoodsSubCategory: function () {
+            btnSearchMaterialSubCategory: function () {
                 let that = this;
                 // 查询子类默认把物品删除
-                that.goodsData = [];
-                that.tableLengthGoods = 0;
+                that.materialData = [];
+                that.tableLengthMaterial = 0;
 
-                that.goodsSubCategoryData = [];
-                that.tableLengthGoodsSubCategory = 0;
-                that.goodsSubCategoryLoading = true;
-                let url = "/goods/searchGoodsSubCategory";
+                that.materialSubCategoryData = [];
+                that.tableLengthMaterialSubCategory = 0;
+                that.materialSubCategoryLoading = true;
+                let url = "/material/searchMaterialSubCategory";
                 let param = {
-                    name: that.goodsSubCategory.name,
-                    effective: that.goodsSubCategory.effective,
-                    size: that.pageSizeGoodsSubCategory,// 每页的记录数（行数）
-                    page: that.pageGoodsSubCategory,//第几条开始
-                    goodsCategoryId: that.goodsSubCategory.goodsCategoryId
+                    name: that.materialSubCategory.name,
+                    effective: that.materialSubCategory.effective,
+                    size: that.pageSizeMaterialSubCategory,// 每页的记录数（行数）
+                    page: that.pageMaterialSubCategory,//第几条开始
+                    materialCategoryId: that.materialSubCategory.materialCategoryId
                 }
                 this.post_url(url, param, "物品子类查询失败！", null).then(function (res) {
-                    that.goodsSubCategoryLoading = false;
+                    that.materialSubCategoryLoading = false;
                     console.info("查询物品子类返回体", res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                        that.goodsSubCategoryData = res.data.list;
-                        that.tableLengthGoodsSubCategory = res.data.total;
+                        that.materialSubCategoryData = res.data.list;
+                        that.tableLengthMaterialSubCategory = res.data.total;
                         if (res.data.total > 0) {
-                            that.$refs.goodsSubCategory.setCurrentRow(res.data.list[0]);
+                            that.$refs.materialSubCategory.setCurrentRow(res.data.list[0]);
                         }
                     }
                 }).catch(res => {
                     console.info("查询物品子类返回体报错", res);
-                    that.goodsSubCategoryLoading = false;
+                    that.materialSubCategoryLoading = false;
                 });
             },
             //打开物品子类信息新增页面
-            btnNewGoodsSubCategory: function () {
+            btnNewMaterialSubCategory: function () {
                 let that = this;
-                if (that.goodsCategorySelect.name == null) {
+                if (that.materialCategorySelect.name == null) {
                     that.$alert('请先选择物品大类', '提示', {
                         dangerouslyUseHTMLString: true
                     });
                 } else {
-                    that.goodsCategoryList = [];
-                    that.addFormVisibleGoodsSubCategory = true;//打开新增页面
-                    that.addFormGoodsSubCategory = {
+                    that.materialCategoryList = [];
+                    that.addFormVisibleMaterialSubCategory = true;//打开新增页面
+                    that.addFormMaterialSubCategory = {
                         name: "",
-                        goodsCategoryId: that.goodsCategorySelect.id,
+                        materialCategoryId: that.materialCategorySelect.id,
                     };//重置form信息
-                    let url = "/goods/searchAllGoodsCategory";//查询全部角色
+                    let url = "/material/searchAllMaterialCategory";//查询全部角色
                     let param = {};
                     this.post_url(url, param, "物品大类查询全部失败！").then(function (res) {
                         console.info(res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                            that.goodsCategoryList = res.data;//物品大类List
+                            that.materialCategoryList = res.data;//物品大类List
                         } else {
                             that.$message.error("物品大类查询全部失败！");
                         }
@@ -1049,53 +1049,53 @@
                 }
             },
             //物品子类新增的提交
-            addSubmitGoodsSubCategory: function () {
-                this.$refs.addFormGoodsSubCategory.validate((valid) => {
+            addSubmitMaterialSubCategory: function () {
+                this.$refs.addFormMaterialSubCategory.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            this.addLoadingGoodsSubCategory = true;
+                            this.addLoadingMaterialSubCategory = true;
                             let that = this;
-                            let url = "/goods/addGoodsSubCategory";//新增物品子类
-                            let param = that.addFormGoodsSubCategory;
+                            let url = "/material/addMaterialSubCategory";//新增物品子类
+                            let param = that.addFormMaterialSubCategory;
                             this.post_url(url, param, "新增物品子类失败！", null).then(function (res) {
-                                that.addLoadingGoodsSubCategory = false;
+                                that.addLoadingMaterialSubCategory = false;
                                 console.info("新增物品子类返回体", res);
                                 if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                     that.$message.success("新增物品子类成功");
-                                    that.addFormVisibleGoodsSubCategory = false;
-                                    that.btnSearchGoodsSubCategory();
+                                    that.addFormVisibleMaterialSubCategory = false;
+                                    that.btnSearchMaterialSubCategory();
                                 } else {
                                     that.$message.error("新增物品子类失败");
                                 }
                             }).catch(() => {
-                                that.addLoadingGoodsSubCategory = false
+                                that.addLoadingMaterialSubCategory = false
                             });
                         });
                     }
                 });
             },
             //打开物品子类信息编辑页面
-            btnEditGoodsSubCategory: function () {
+            btnEditMaterialSubCategory: function () {
                 let that = this;
-                if (this.goodsSubCategorySelect.name == null) {
+                if (this.materialSubCategorySelect.name == null) {
                     this.$alert('请选择要编辑的数据', '提示', {
                         dangerouslyUseHTMLString: true
                     });
                 } else {
-                    console.info("是否有效", this.goodsSubCategorySelect.effective)
-                    that.editFormVisibleGoodsSubCategory = true;//打开编辑页面
-                    that.editFormGoodsSubCategory = {
-                        name: this.goodsSubCategorySelect.name,//名称
-                        id: this.goodsSubCategorySelect.id,//主键
-                        effective: this.goodsSubCategorySelect.effective,//是否有效
-                        goodsCategoryId: this.goodsSubCategorySelect.goodsCategoryId,//大类Id
+                    console.info("是否有效", this.materialSubCategorySelect.effective)
+                    that.editFormVisibleMaterialSubCategory = true;//打开编辑页面
+                    that.editFormMaterialSubCategory = {
+                        name: this.materialSubCategorySelect.name,//名称
+                        id: this.materialSubCategorySelect.id,//主键
+                        effective: this.materialSubCategorySelect.effective,//是否有效
+                        materialCategoryId: this.materialSubCategorySelect.materialCategoryId,//大类Id
                     };//重置form信息
-                    let url = "/goods/searchAllGoodsCategory";//查询全部角色
+                    let url = "/material/searchAllMaterialCategory";//查询全部角色
                     let param = {};
                     this.post_url(url, param, "物品大类查询全部失败！").then(function (res) {
                         console.info(res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                            that.goodsCategoryList = res.data;//物品大类List
+                            that.materialCategoryList = res.data;//物品大类List
                         } else {
                             that.$message.error("物品大类查询全部失败！");
                         }
@@ -1105,35 +1105,35 @@
                 }
             },
             //物品子类修改提交
-            editSubmitGoodsSubCategory: function () {
-                this.$refs.editFormGoodsSubCategory.validate((valid) => {
+            editSubmitMaterialSubCategory: function () {
+                this.$refs.editFormMaterialSubCategory.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            this.editLoadingGoodsSubCategory = true;
+                            this.editLoadingMaterialSubCategory = true;
                             let that = this;
-                            let url = "/goods/updateGoodsSubCategory";//修改物品子类
-                            let param = that.editFormGoodsSubCategory;
+                            let url = "/material/updateMaterialSubCategory";//修改物品子类
+                            let param = that.editFormMaterialSubCategory;
                             this.post_url(url, param, "修改物品子类失败！", null).then(function (res) {
-                                that.editLoadingGoodsSubCategory = false;
+                                that.editLoadingMaterialSubCategory = false;
                                 console.info("修改物品子类返回体", res);
                                 if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                     that.$message.success("修改物品子类成功");
-                                    that.editFormVisibleGoodsSubCategory = false;
-                                    that.btnSearchGoodsSubCategory();
+                                    that.editFormVisibleMaterialSubCategory = false;
+                                    that.btnSearchMaterialSubCategory();
                                 } else {
                                     that.$message.error("新增物品子类失败");
                                 }
                             }).catch(() => {
-                                that.editLoadingGoodsSubCategory = false
+                                that.editLoadingMaterialSubCategory = false
                             });
                         });
                     }
                 });
             },
             //删除物品子类信息
-            btnDeleteGoodsSubCategory: function () {
+            btnDeleteMaterialSubCategory: function () {
                 let that = this;
-                let ids = this.goodsSubCategorySelect.id;
+                let ids = this.materialSubCategorySelect.id;
                 if (ids == '' || ids == null) {
                     this.$alert('请选择要删除的记录', '提示', {
                         dangerouslyUseHTMLString: true
@@ -1142,68 +1142,68 @@
                     this.$confirm('确认删除选中记录吗？', '提示', {
                         type: 'warning'
                     }).then(() => {
-                        that.goodsSubCategoryLoading = true;
+                        that.materialSubCategoryLoading = true;
                         let param = {
-                            id: this.goodsSubCategorySelect.id//删除 物品子类
+                            id: this.materialSubCategorySelect.id//删除 物品子类
                         }
-                        let url = "/goods/deleteGoodsSubCategory";//删除物品子类
+                        let url = "/material/deleteMaterialSubCategory";//删除物品子类
                         this.post_url(url, param, "删除物品子类失败！", null).then(function (res) {
-                            that.goodsSubCategoryLoading = false;
+                            that.materialSubCategoryLoading = false;
                             console.info(res);
                             if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                 that.$message.success("删除物品子类成功");
-                                that.btnSearchGoodsSubCategory();
+                                that.btnSearchMaterialSubCategory();
                             }
                         }).catch(() => {
-                            that.goodsSubCategoryLoading = false;
+                            that.materialSubCategoryLoading = false;
                             that.$message.warning("删除物品子类失败");
                         });
                     }).catch(() => {
-                        that.goodsSubCategoryLoading = false;
+                        that.materialSubCategoryLoading = false;
                         that.$message.warning("删除物品子类失败");
                     });
                 }
             },
             //点击物品子类row触发事件
-            rowChangeGoodsSubCategoryData: function (row) {
+            rowChangeMaterialSubCategoryData: function (row) {
                 if (row != null && row.id != null) {
-                    this.goodsSubCategorySelect = row;
-                    this.goods.goodsSubCategoryId = row.id;
-                    this.goodsSelect = {};
-                    this.btnSearchGoods();
+                    this.materialSubCategorySelect = row;
+                    this.material.materialSubCategoryId = row.id;
+                    this.materialSelect = {};
+                    this.btnSearchMaterial();
                 }
             },
             //物品子类table改变一页多少行触发事件
-            handleSizeChangeGoodsSubCategory: function (size) {
-                if (size != this.pageSizeGoodsSubCategory) {
-                    this.pageSizeGoodsSubCategory = size;
-                    this.btnSearchGoodsSubCategory();
+            handleSizeChangeMaterialSubCategory: function (size) {
+                if (size != this.pageSizeMaterialSubCategory) {
+                    this.pageSizeMaterialSubCategory = size;
+                    this.btnSearchMaterialSubCategory();
                 }
             },
             //物品子类改变页面触发事件
-            handleCurrentChangeGoodsSubCategory: function (page) {
-                if (page != this.pageGoodsSubCategory) {
-                    this.pageGoodsSubCategory = page;
-                    this.btnSearchGoodsSubCategory();
+            handleCurrentChangeMaterialSubCategory: function (page) {
+                if (page != this.pageMaterialSubCategory) {
+                    this.pageMaterialSubCategory = page;
+                    this.btnSearchMaterialSubCategory();
                 }
             },
             /************************物品**********************************/
             //改变物品大类触发事件
-            goodsCategoryChange: function (row) {
+            materialCategoryChange: function (row) {
                 let that = this;
-                that.goodsSubCategoryList = [];
-                that.addFormGoods.goodsSubCategoryId = "";
+                that.materialSubCategoryList = [];
+                that.addFormMaterial.materialSubCategoryId = "";
                 console.info("物品大类触发改变事件", row)
-                let url = "/goods/searchAllGoodsSubCategory";//查询全部子类
+                let url = "/material/searchAllMaterialSubCategory";//查询全部子类
                 let param = {
-                    goodsCategoryId: row
+                    materialCategoryId: row
                 };
                 this.post_url(url, param, "物品子类查询全部失败！").then(function (res) {
                     console.info("物品子类查询全部", res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                        that.goodsSubCategoryList = res.data;//物品子类List
+                        that.materialSubCategoryList = res.data;//物品子类List
                         if (res.data.length > 0) {
-                            that.addFormGoods.goodsSubCategoryId = res.data[0].id;
+                            that.addFormMaterial.materialSubCategoryId = res.data[0].id;
                         }
                     } else {
                         that.$message.error("物品子类查询全部失败！");
@@ -1213,21 +1213,21 @@
                 });
             },
             //改变物品大类触发事件
-            goodsCategoryChangeUpdate: function (row) {
+            materialCategoryChangeUpdate: function (row) {
                 let that = this;
-                that.goodsSubCategoryList = [];
-                that.editFormGoods.goodsSubCategoryId = "";
+                that.materialSubCategoryList = [];
+                that.editFormMaterial.materialSubCategoryId = "";
                 console.info("物品大类触发改变事件", row)
-                let url = "/goods/searchAllGoodsSubCategory";//查询全部子类
+                let url = "/material/searchAllMaterialSubCategory";//查询全部子类
                 let param = {
-                    goodsCategoryId: row
+                    materialCategoryId: row
                 };
                 this.post_url(url, param, "物品子类查询全部失败！").then(function (res) {
                     console.info("物品子类查询全部", res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                        that.goodsSubCategoryList = res.data;//物品子类List
+                        that.materialSubCategoryList = res.data;//物品子类List
                         if (res.data.length > 0) {
-                            that.editFormGoods.goodsSubCategoryId = res.data[0].id;
+                            that.editFormMaterial.materialSubCategoryId = res.data[0].id;
                         }
                     } else {
                         that.$message.error("物品子类查询全部失败！");
@@ -1237,22 +1237,22 @@
                 });
             },
             //物品的查询
-            btnSearchGoods: function () {
+            btnSearchMaterial: function () {
                 let that = this;
-                that.goodsData = [];
-                that.tableLengthGoods = 0;
-                that.goodsLoading = true;
-                let url = "/goods/searchGoodsByCategory";
+                that.materialData = [];
+                that.tableLengthMaterial = 0;
+                that.materialLoading = true;
+                let url = "/material/searchMaterialByCategory";
                 let param = {
-                    name: that.goods.name,
-                    abbreviation: that.goods.abbreviation,
-                    effective: that.goods.effective,
-                    size: that.pageSizeGoods,// 每页的记录数（行数）
-                    page: that.pageGoods,//第几条开始
-                    goodsSubCategoryId: that.goods.goodsSubCategoryId
+                    name: that.material.name,
+                    abbreviation: that.material.abbreviation,
+                    effective: that.material.effective,
+                    size: that.pageSizeMaterial,// 每页的记录数（行数）
+                    page: that.pageMaterial,//第几条开始
+                    materialSubCategoryId: that.material.materialSubCategoryId
                 }
                 this.post_url(url, param, "物品查询失败！", null).then(function (res) {
-                    that.goodsLoading = false;
+                    that.materialLoading = false;
 
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                         if (res.data.list != null && res.data.list.length > 0) {
@@ -1265,30 +1265,30 @@
                                 }
                             }
                         }
-                        that.goodsData = res.data.list;
-                        that.tableLengthGoods = res.data.total;
+                        that.materialData = res.data.list;
+                        that.tableLengthMaterial = res.data.total;
                     }
                     console.info("查询物品返回体", res);
                 }).catch(res => {
                     console.info("查询物品返回体报错", res);
-                    that.goodsLoading = false;
+                    that.materialLoading = false;
                 });
             },
             //打开物品信息新增页面
-            btnNewGoods: function () {
+            btnNewMaterial: function () {
                 let that = this;
-                if (that.goodsSubCategorySelect.name == null) {
+                if (that.materialSubCategorySelect.name == null) {
                     that.$alert('请先选择物品', '提示', {
                         dangerouslyUseHTMLString: true
                     });
                 } else {
-                    that.goodsCategoryList = [];
-                    that.goodsSubCategoryList = [];
-                    that.addFormVisibleGoods = true;//打开新增页面
-                    that.addFormGoods = {
+                    that.materialCategoryList = [];
+                    that.materialSubCategoryList = [];
+                    that.addFormVisibleMaterial = true;//打开新增页面
+                    that.addFormMaterial = {
                         name: "",
-                        goodsCategoryId: that.goodsCategorySelect.id,
-                        goodsSubCategoryId: that.goodsSubCategorySelect.id,
+                        materialCategoryId: that.materialCategorySelect.id,
+                        materialSubCategoryId: that.materialSubCategorySelect.id,
                         abbreviation: "",
                         unit: "",
                         type: "",
@@ -1298,26 +1298,26 @@
                         price: 0,
                         description: "",
                     };//重置form信息
-                    let url = "/goods/searchAllGoodsCategory";//查询全部大类
+                    let url = "/material/searchAllMaterialCategory";//查询全部大类
                     let param = {};
                     this.post_url(url, param, "物品大类查询全部失败！").then(function (res) {
                         console.info(res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                            that.goodsCategoryList = res.data;//物品大类List
+                            that.materialCategoryList = res.data;//物品大类List
                         } else {
                             that.$message.error("物品大类查询全部失败！");
                         }
                     }).catch(res => {
                         console.info("物品大类查询全部失败", res);
                     });
-                    url = "/goods/searchAllGoodsSubCategory";//查询全部子类
+                    url = "/material/searchAllMaterialSubCategory";//查询全部子类
                     param = {
-                        goodsCategoryId: that.goodsCategorySelect.id
+                        materialCategoryId: that.materialCategorySelect.id
                     };
                     this.post_url(url, param, "物品子类查询全部失败！").then(function (res) {
                         console.info("物品子类查询全部", res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                            that.goodsSubCategoryList = res.data;//物品子类List
+                            that.materialSubCategoryList = res.data;//物品子类List
                         } else {
                             that.$message.error("物品子类查询全部失败！");
                         }
@@ -1328,26 +1328,26 @@
                 }
             },
             //提交物品新增
-            addSubmitGoods: function () {
-                this.$refs.addFormGoods.validate((valid) => {
+            addSubmitMaterial: function () {
+                this.$refs.addFormMaterial.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            this.addLoadingGoods = true;
+                            this.addLoadingMaterial = true;
                             let that = this;
-                            let url = "/goods/addGoods";//新增物品
-                            let param = that.addFormGoods;
+                            let url = "/material/addMaterial";//新增物品
+                            let param = that.addFormMaterial;
                             this.post_url(url, param, "新增物品失败！", null).then(function (res) {
-                                that.addLoadingGoods = false;
+                                that.addLoadingMaterial = false;
                                 console.info("新增物品返回体", res);
                                 if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                     that.$message.success("新增物品成功");
-                                    that.addFormVisibleGoods = false;
-                                    that.btnSearchGoods();
+                                    that.addFormVisibleMaterial = false;
+                                    that.btnSearchMaterial();
                                 } else {
                                     that.$message.error("新增物品失败");
                                 }
                             }).catch(() => {
-                                that.addLoadingGoods = false
+                                that.addLoadingMaterial = false
                                 that.$message.error("新增物品失败");
                             });
                         });
@@ -1355,51 +1355,51 @@
                 });
             },
             //打开物品信息编辑页面
-            btnEditGoods: function () {
+            btnEditMaterial: function () {
                 let that = this;
-                if (that.goodsSelect.name == null) {
+                if (that.materialSelect.name == null) {
                     that.$alert('请先选择物品', '提示', {
                         dangerouslyUseHTMLString: true
                     });
                 } else {
-                    that.goodsCategoryList = [];
-                    that.goodsSubCategoryList = [];
-                    that.editFormVisibleGoods = true;//打开新增页面
-                    that.editFormGoods = {
-                        id: that.goodsSelect.id,
-                        effective: that.goodsSelect.effective,
-                        name: that.goodsSelect.name,
-                        goodsCategoryId: that.goodsSelect.goodsCategoryId,
-                        goodsSubCategoryId: that.goodsSelect.goodsSubCategoryId,
-                        abbreviation: that.goodsSelect.abbreviation,
-                        unit: that.goodsSelect.unit,
-                        type: that.goodsSelect.type,
-                        size: that.goodsSelect.size,
-                        weight: that.goodsSelect.weight,
-                        temperature: that.goodsSelect.temperature,
-                        price: that.goodsSelect.price,
-                        description: that.goodsSelect.description,
+                    that.materialCategoryList = [];
+                    that.materialSubCategoryList = [];
+                    that.editFormVisibleMaterial = true;//打开新增页面
+                    that.editFormMaterial = {
+                        id: that.materialSelect.id,
+                        effective: that.materialSelect.effective,
+                        name: that.materialSelect.name,
+                        materialCategoryId: that.materialSelect.materialCategoryId,
+                        materialSubCategoryId: that.materialSelect.materialSubCategoryId,
+                        abbreviation: that.materialSelect.abbreviation,
+                        unit: that.materialSelect.unit,
+                        type: that.materialSelect.type,
+                        size: that.materialSelect.size,
+                        weight: that.materialSelect.weight,
+                        temperature: that.materialSelect.temperature,
+                        price: that.materialSelect.price,
+                        description: that.materialSelect.description,
                     };//重置form信息
-                    let url = "/goods/searchAllGoodsCategory";//查询全部大类
+                    let url = "/material/searchAllMaterialCategory";//查询全部大类
                     let param = {};
                     this.post_url(url, param, "物品大类查询全部失败！").then(function (res) {
                         console.info(res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                            that.goodsCategoryList = res.data;//物品大类List
+                            that.materialCategoryList = res.data;//物品大类List
                         } else {
                             that.$message.error("物品大类查询全部失败！");
                         }
                     }).catch(res => {
                         console.info("物品大类查询全部失败", res);
                     });
-                    url = "/goods/searchAllGoodsSubCategory";//查询全部子类
+                    url = "/material/searchAllMaterialSubCategory";//查询全部子类
                     param = {
-                        goodsCategoryId: that.goodsSelect.goodsCategoryId
+                        materialCategoryId: that.materialSelect.materialCategoryId
                     };
                     this.post_url(url, param, "物品子类查询全部失败！").then(function (res) {
                         console.info("物品子类查询全部", res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
-                            that.goodsSubCategoryList = res.data;//物品子类List
+                            that.materialSubCategoryList = res.data;//物品子类List
                         } else {
                             that.$message.error("物品子类查询全部失败！");
                         }
@@ -1410,26 +1410,26 @@
                 }
             },
             //提交物品编辑
-            editSubmitGoods: function () {
-                this.$refs.editFormGoods.validate((valid) => {
+            editSubmitMaterial: function () {
+                this.$refs.editFormMaterial.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            this.editLoadingGoods = true;
+                            this.editLoadingMaterial = true;
                             let that = this;
-                            let url = "/goods/updateGoods";//修改物品
-                            let param = that.editFormGoods;
+                            let url = "/material/updateMaterial";//修改物品
+                            let param = that.editFormMaterial;
                             this.post_url(url, param, "修改物品失败！", null).then(function (res) {
-                                that.editLoadingGoods = false;
+                                that.editLoadingMaterial = false;
                                 console.info("修改物品返回体", res);
                                 if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                     that.$message.success("修改物品成功");
-                                    that.editFormVisibleGoods = false;
-                                    that.btnSearchGoods();
+                                    that.editFormVisibleMaterial = false;
+                                    that.btnSearchMaterial();
                                 } else {
                                     that.$message.error("修改物品失败");
                                 }
                             }).catch(() => {
-                                that.editLoadingGoods = false
+                                that.editLoadingMaterial = false
                                 that.$message.error("修改物品失败");
                             });
                         });
@@ -1437,9 +1437,9 @@
                 });
             },
             //删除物品信息
-            btnDeleteGoods: function () {
+            btnDeleteMaterial: function () {
                 let that = this;
-                let ids = this.goodsSelect.id;
+                let ids = this.materialSelect.id;
                 if (ids == '' || ids == null) {
                     this.$alert('请选择要删除的记录', '提示', {
                         dangerouslyUseHTMLString: true
@@ -1448,24 +1448,24 @@
                     this.$confirm('确认删除选中记录吗？', '提示', {
                         type: 'warning'
                     }).then(() => {
-                        that.goodsLoading = true;
+                        that.materialLoading = true;
                         let param = {
-                            id: this.goodsSelect.id//删除 物品
+                            id: this.materialSelect.id//删除 物品
                         }
-                        let url = "/goods/deleteGoods";//删除物品
+                        let url = "/material/deleteMaterial";//删除物品
                         this.post_url(url, param, "删除物品失败！", null).then(function (res) {
-                            that.goodsLoading = false;
+                            that.materialLoading = false;
                             console.info(res);
                             if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                 that.$message.success("删除物品成功");
-                                that.btnSearchGoods();
+                                that.btnSearchMaterial();
                             }
                         }).catch(() => {
-                            that.goodsLoading = false;
+                            that.materialLoading = false;
                             that.$message.warning("删除物品失败");
                         });
                     }).catch(() => {
-                        that.goodsLoading = false;
+                        that.materialLoading = false;
                         that.$message.warning("删除物品失败");
                     });
                 }
@@ -1474,7 +1474,7 @@
             operationPicture: function (row) {
                 console.info("点击查看图片", row.pictures);
                 let that = this;
-                that.goodsSelect = row;
+                that.materialSelect = row;
 
                 that.pictures = row.pictures;
                 that.picturesList = [];
@@ -1488,8 +1488,8 @@
                 }
                 that.limitSize = size;
                 console.info("当前图片个数", size);
-                that.pictureGoodsId.goodsId = row.id;
-                that.editFormVisibleGoodsPicture = true;
+                that.pictureMaterialId.materialId = row.id;
+                that.editFormVisibleMaterialPicture = true;
             },
             //点击图片
             pictureClick: function (res) {
@@ -1498,7 +1498,7 @@
                 that.pictureId = res
             },
             //删除图片
-            deleteGoodsPicture: function (id) {
+            deleteMaterialPicture: function (id) {
                 let that = this;
                 this.$confirm('确认删除选中照片吗？', '提示', {
                     type: 'warning'
@@ -1507,16 +1507,16 @@
                     let param = {
                         id: id //删除 物品的图片ID
                     }
-                    let url = "/goods/deleteGoodsPicture";//删除物品的图片
+                    let url = "/material/deleteMaterialPicture";//删除物品的图片
                     this.post_url(url, param, "删除图片失败！", that.visible = false).then(function (res) {
                         that.visible = false;
                         console.info(res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                             that.$message.success("删除图片成功");
-                            that.editFormVisibleGoodsPicture = false;//关闭图片页面
+                            that.editFormVisibleMaterialPicture = false;//关闭图片页面
                             that.pictureId = 0;//清空选择的图片
-                            that.goodsSelect = {};//清空选择的物品信息
-                            that.btnSearchGoods();
+                            that.materialSelect = {};//清空选择的物品信息
+                            that.btnSearchMaterial();
                         }
                     }).catch(() => {
                         that.visible = false;
@@ -1539,11 +1539,11 @@
                 } else {
                     this.fileData = new FormData();  // new formData对象
                     this.$refs.upload.submit();  // 提交调用uploadFile函数
-                    this.fileData.append('goodsId', this.goodsSelect.id);  // 添加物品ID
-                    console.info("提交新增图片goodsId", this.goodsSelect.id)
+                    this.fileData.append('materialId', this.materialSelect.id);  // 添加物品ID
+                    console.info("提交新增图片materialId", this.materialSelect.id)
                     console.info("提交新增图片List", this.fileList)
                     console.info("提交新增图片信息", this.fileData)
-                    let url = "/file/addGoodsPicture";
+                    let url = "/file/addMaterialPicture";
                     let param = this.fileData;
                     this.postUpload(url, param, "上传图片失败！", null).then(function (res) {
                         if (res.data.code === Variable_global.errorCode.SUCCESS) {
@@ -1552,8 +1552,8 @@
                                 type: 'success'
                             });
                             that.$refs.upload.clearFiles();
-                            that.editFormVisibleGoodsPicture = false;
-                            that.btnSearchGoods();
+                            that.editFormVisibleMaterialPicture = false;
+                            that.btnSearchMaterial();
                         } else {
                             that.$message.error(res.data.data);
                         }
@@ -1606,23 +1606,23 @@
                 return this.$confirm(`确定移除 ${file.name}？`);
             },
             //点击物品row触发事件
-            rowChangeGoodsData: function (row) {
+            rowChangeMaterialData: function (row) {
                 if (row != null && row.id != null) {
-                    this.goodsSelect = row;
+                    this.materialSelect = row;
                 }
             },
             //物品table改变一页多少行触发事件
-            handleSizeChangeGoods: function (size) {
-                if (size != this.pageSizeGoods) {
-                    this.pageSizeGoods = size;
-                    this.btnSearchGoods();
+            handleSizeChangeMaterial: function (size) {
+                if (size != this.pageSizeMaterial) {
+                    this.pageSizeMaterial = size;
+                    this.btnSearchMaterial();
                 }
             },
             //物品改变页面触发事件
-            handleCurrentChangeGoods: function (page) {
-                if (page != this.pageGoods) {
-                    this.pageGoods = page;
-                    this.btnSearchGoods();
+            handleCurrentChangeMaterial: function (page) {
+                if (page != this.pageMaterial) {
+                    this.pageMaterial = page;
+                    this.btnSearchMaterial();
                 }
             },
         }

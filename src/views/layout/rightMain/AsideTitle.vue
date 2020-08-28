@@ -210,7 +210,8 @@
             let _this = this
             window.addEventListener('beforeunload', e => {
                 debugger
-                console.info("进入beforeunloadeditFormVisiblePicture");
+                console.info("进入beforeunload");
+                // debugger
                 sessionStorage.setItem("titleItem", JSON.stringify({
                     titleItem: _this.getAsideTitle,
                     activeIndex: _this.active,

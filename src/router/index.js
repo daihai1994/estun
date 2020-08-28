@@ -140,6 +140,7 @@ const router = new VueRouter({
 * 全局前置路由
 * */
 router.beforeEach((to, from, next) => {
+    debugger
     //校验是否找回密码
     console.info("进入全局前置路由"+to.path);
     if (to.path == '/retrievePassword') {

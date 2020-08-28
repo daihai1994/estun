@@ -4,7 +4,7 @@
         <el-col :span="24"  style="padding-bottom: 0;">
             <el-form :inline="true" :model="filters" >
 <!--                <el-form-item prop="materialId">-->
-<!--                    <el-select v-model="filters.materialId" filterable placeholder="请选择物品" style="width: 150px">-->
+<!--                    <el-select v-model="filters.materialId" filterable placeholder="请选择物料" style="width: 150px">-->
 <!--                        <el-option-->
 <!--                                v-for="item in materialAllList"-->
 <!--                                :key="item.id"-->
@@ -88,9 +88,9 @@
                                     <el-col :span="12">
                                         <el-row :gutter="10">
                                             <el-col :span="12">
-                                                <span style="font-size: 20px;color: #409EFF">物品信息</span>
+                                                <span style="font-size: 20px;color: #409EFF">物料信息</span>
                                                 <el-form label-position="left" inline class="demo-table-expand">
-                                                    <el-form-item label="物品名称">
+                                                    <el-form-item label="物料名称">
                                                         <span>{{ dataInfo.row.material.name }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="计量单位">
@@ -111,7 +111,7 @@
                                                     <el-form-item label="参考价钱(元)">
                                                         <span>{{ dataInfo.row.material.price }}</span>
                                                     </el-form-item>
-                                                    <el-form-item label="物品描述">
+                                                    <el-form-item label="物料描述">
                                                         <span>{{ dataInfo.row.material.description }}</span>
                                                     </el-form-item>
                                                     <el-form-item label="登记时间">
@@ -167,7 +167,7 @@
                         <el-table-column
                                 prop="material.name"
                                 sortable
-                                label="物品">
+                                label="物料">
                         </el-table-column>
                         <el-table-column
                                 prop="material.unit"
@@ -287,7 +287,7 @@
                             style="width: 100%;font-size: 10px">
                         <el-table-column
                                 prop="material.name"
-                                label="物品"
+                                label="物料"
                                 width="80">
                         </el-table-column>
                         <el-table-column
@@ -387,7 +387,7 @@
                         style="width: 100%;">
                     <el-table-column
                             prop="materialName"
-                            label="物品">
+                            label="物料">
                     </el-table-column>
                     <el-table-column
                             prop="quantity"
@@ -428,7 +428,7 @@
                 ref="drawer">
             <div>
                 <el-form :model="addFormDrawer" :rules="addFormDrawerRules" ref="addFormDrawer" label-width="100px" style="margin: 50px">
-                    <el-form-item label="物品" prop="materialId">
+                    <el-form-item label="物料" prop="materialId">
                         <el-select v-model="addFormDrawer.materialId"  filterable placeholder="请选择">
                             <el-option
                                     v-for="item in materialList"
@@ -484,7 +484,7 @@
         <!--更新界面-->
         <el-dialog title="修改订单" :visible.sync="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" :rules="editFormRules"  ref="editForm" label-width="100px" >
-                <el-form-item label="物品" prop="materialId">
+                <el-form-item label="物料" prop="materialId">
                     <el-select v-model="editForm.materialId"  filterable placeholder="请选择">
                         <el-option
                                 v-for="item in materialList"
@@ -565,14 +565,14 @@
                 editLoading: false,//编辑提交等待页面
                 printingVisible: false,//打印页面
                 addFormDrawerRules: {
-                     materialId: [{ required: true, message: '请选择物品', trigger: 'change' },],
+                     materialId: [{ required: true, message: '请选择物料', trigger: 'change' },],
                     quantity: [{ validator:quantity, trigger: 'blur' },],
                     reason: [{ required: true, message: '请输入申请原因', trigger: 'blur' },],
                     timeArrival: [{ required: true, message: '请输入要求到货时间', trigger: 'change' },],
-                    consigneeId: [{ required: true, message: '请选择物品', trigger: 'change' },],
+                    consigneeId: [{ required: true, message: '请选择物料', trigger: 'change' },],
                 },
                 editFormRules: {
-                    materialId: [{ required: true, message: '请选择物品', trigger: 'change' },],
+                    materialId: [{ required: true, message: '请选择物料', trigger: 'change' },],
                     quantity: [{ validator:quantity, trigger: 'blur' },],
                     reason: [{ required: true, message: '请输入申请原因', trigger: 'blur' },],
                     timeArrival: [{ required: true, message: '请输入要求到货时间', trigger: 'change' },],
@@ -588,9 +588,9 @@
                 },
                 addFormDrawer:{
                     uuid:"",//随机生成ID
-                    materialId:null,//物品Id
+                    materialId:null,//物料Id
                     supplierId:null,//供应商Id
-                    materialName:'',//物品名称
+                    materialName:'',//物料名称
                     supplierName:'',//供应商名称
                     brand:'',//品牌
                     quantity:1,//数量
@@ -603,7 +603,7 @@
                 },
                 //编辑界面数据
                 editForm: {
-                    materialId: '',//物品ID
+                    materialId: '',//物料ID
                     supplierId:0,//供货商ID
                     brand:'',//品牌
                     quantity:1,//数量
@@ -635,8 +635,8 @@
                     }
                 },
                 currentRow:{},//行数据
-                materialList:[],//物品选择
-                materialAllList:[],//物品全部选择
+                materialList:[],//物料选择
+                materialAllList:[],//物料全部选择
                 statusList:[],//状态表信息
                 supplierList:[],//仓库选择
                 consigneeInfoList:[],//收货人全部list
@@ -664,16 +664,16 @@
                 this.printingVisible = true;
                 this.printOrderList = row;
             },
-            //更新订单明细物品
+            //更新订单明细物料
             submitPurchase(){
                 let that = this;
                 that.$refs.editForm.validate((valid) => {
                     if(valid) {
                         that.editLoading = true;
                         let param = that.editForm;
-                        let url = "/purchase/updatePurchase";//更新明细物品
+                        let url = "/purchase/updatePurchase";//更新明细物料
                         that.post_url(url, param, "更新失败！", null).then(function (res) {
-                            console.info("更新订单明细物品",res);
+                            console.info("更新订单明细物料",res);
                             that.editLoading = false;
                             if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                                 that.$message.success("更新成功");
@@ -689,7 +689,7 @@
                     }
                 })
             },
-            //订单明细物品的编辑
+            //订单明细物料的编辑
             orderPurchaseClick(row,statusId){
                 if (statusId == 2 ||statusId == 3) {
                     this.$alert('当前选中的信息审批状态已经处理过，无法修改！', '提示', {
@@ -697,10 +697,10 @@
                     });
                     return;
                 }
-                console.info("订单明细物品的编辑",row);
+                console.info("订单明细物料的编辑",row);
                 this.editFormVisible = true;
                 this.editForm = {
-                    materialId: row.materialId,//物品ID
+                    materialId: row.materialId,//物料ID
                     supplierId:row.supplierId,//供货商ID
                     brand:row.brand,//品牌
                     quantity:row.quantity,//数量
@@ -712,7 +712,7 @@
                     id:row.id,//订单主键Id
                 }
             },
-            //订单明细物品的删除
+            //订单明细物料的删除
             deleteOrderPurchase(row,statusId){
                 if (statusId !== 1) {
                     this.$alert('当前选中的信息审批状态已经处理过，无法删除！', '提示', {
@@ -721,16 +721,16 @@
                     return;
                 }
                 let that = this;
-                console.info("订单明细物品的删除",row);
+                console.info("订单明细物料的删除",row);
                 this.$confirm('确认删除选中记录吗？', '提示', {
                     type: 'warning'
                 }).then(() => {
                     let param = {
-                        id: row.id//删除 订单明细物品ID
+                        id: row.id//删除 订单明细物料ID
                     }
-                    let url = "/purchase/deletePurchase";//删除订单明细物品
+                    let url = "/purchase/deletePurchase";//删除订单明细物料
                     this.post_url(url, param, "删除失败！", null).then(function (res) {
-                        console.info("删除订单明细物品",res);
+                        console.info("删除订单明细物料",res);
                         if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                             that.$message.success("删除成功");
                             that.search();
@@ -758,7 +758,7 @@
                     return '无效'
                 }
             },
-            //初始化新增物品信息
+            //初始化新增物料信息
             initDrawerInfo(){
                 this.addFormDrawer.uuid= '';
                 this.addFormDrawer.materialId= '';
@@ -848,7 +848,7 @@
                                 break;
                             }
                         }
-                        console.info("物品选择改变事件",obj);
+                        console.info("物料选择改变事件",obj);
                         this.addFormDrawer.materialName = obj.name;
 
                         obj = {};
@@ -858,7 +858,7 @@
                                 break;
                             }
                         }
-                        console.info("物品选择改变事件",obj);
+                        console.info("物料选择改变事件",obj);
                         this.addFormDrawer.consignee = obj.name;
                         this.addFormDrawer.phone = obj.phone;
                         this.addFormDrawer.addressShipping = obj.address;
@@ -969,7 +969,7 @@
                             orderNumber: this.currentRow.orderNumber//删除  订单
                         }
                         that.listLoading = true;
-                        let url = "/purchase/deleteOrder";//删除物品
+                        let url = "/purchase/deleteOrder";//删除物料
                         this.post_url(url, param, "删除订单失败！", null).then(function (res) {
                             console.info(res);
                             that.listLoading = false;
@@ -1002,15 +1002,15 @@
                     that.$message.error("服务器错误！")
                 });
             },
-            //查询全部物品
+            //查询全部物料
             searchMaterialList:function(){
                 let that = this;
                 let url = "/material/searchAllMaterial";
                 let param = {
                 };
                 that.materialList = [];
-                this.post_url(url, param, "查询全部物品失败！", null).then(function (res) {
-                    console.info("查询全部物品返回体",res);
+                this.post_url(url, param, "查询全部物料失败！", null).then(function (res) {
+                    console.info("查询全部物料返回体",res);
                     if (res.headers.code == Variable_global.errorCode.SUCCESS) {
                         let all = {
                             id:0,
@@ -1073,7 +1073,7 @@
                 let url = "/purchase/searchPurchase";
                 that.currentRow = {};
                 let param = {
-                    materialId:that.filters.materialId,//物品ID
+                    materialId:that.filters.materialId,//物料ID
                     applicantId:that.filters.applicantId,//申请人
                     approverId:that.filters.approverId,//审批人
                     startTime:that.filters.startTime,//开始时间
@@ -1145,7 +1145,7 @@
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
                         if(this.addForm.purchaseList.length<=0){
-                            this.$message.info("请先新增物品！");
+                            this.$message.info("请先新增物料！");
                             return;
                         }
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {

@@ -32,16 +32,16 @@ const routes = [
     },
     {
         path: '/login',
-        component: login
+        component:resolve => require(['../views/Login'],resolve)
     },
     {
         path: '/retrievePassword',
-        component: retrievePassword
+        component: resolve => require(['../views/RetrievePassword'],resolve)
     },
     {
         path: '/home',
         redirect: '/userInfo',
-        component: home,
+        component: resolve => require(['../components/Home'],resolve),
         children: [
             { //人员管理
                 path: '/userInfo',
@@ -49,7 +49,7 @@ const routes = [
                     name: '人员管理',
                     comp: 'userInfo'
                 },
-                component: userInfo
+                component: resolve => require(['../views/UserInfo'],resolve),
             },
             { //权限管理
                 path: '/authority',
@@ -57,7 +57,7 @@ const routes = [
                     name: '权限管理',
                     comp: 'authority'
                 },
-                component: authority
+                component: resolve => require(['../views/Authority'],resolve),
             },
             { //物料管理
                 path: '/material',
@@ -65,7 +65,7 @@ const routes = [
                     name: '物料管理',
                     comp: 'material'
                 },
-                component: material
+                component: resolve => require(['../views/Material'],resolve),
             },
             { //修改密码
                 path: '/homeUpdatePass',
@@ -73,7 +73,7 @@ const routes = [
                     name: '修改密码',
                     comp: 'homeUpdatePass'
                 },
-                component: homeUpdatePass
+                component: resolve => require(['../views/HomeUpdatePass'],resolve),
             },
             { //供货商管理
                 path: '/supplier',
@@ -81,7 +81,7 @@ const routes = [
                     name: '供货商管理',
                     comp: 'supplier'
                 },
-                component: supplier
+                component: resolve => require(['../views/Supplier'],resolve),
             },
             { //客户管理
                 path: '/customer',
@@ -89,7 +89,7 @@ const routes = [
                     name: '客户管理',
                     comp: 'customer'
                 },
-                component: customer
+                component: resolve => require(['../views/Customer'],resolve),
             },
             { //日志管理
                 path: '/logger',
@@ -97,7 +97,7 @@ const routes = [
                     name: '日志查询',
                     comp: 'logger'
                 },
-                component: logger
+                component: resolve => require(['../views/Logger'],resolve),
             }
             ,
             { //个人信息
@@ -106,7 +106,7 @@ const routes = [
                     name: '个人信息',
                     comp: 'personalInfo'
                 },
-                component: personalInfo
+                component: resolve => require(['../views/PersonalInfo'],resolve),
             } ,
             { //下单管理
                 path: '/order',
@@ -114,7 +114,7 @@ const routes = [
                     name: '下单管理',
                     comp: 'order'
                 },
-                component: order
+                component: resolve => require(['../views/Order'],resolve),
             } ,
             { //价格管理
                 path: '/price',
@@ -122,7 +122,7 @@ const routes = [
                     name: '价格管理',
                     comp: 'price'
                 },
-                component: price
+                component: resolve => require(['../views/Price'],resolve),
             }
 
 

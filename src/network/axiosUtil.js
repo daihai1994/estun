@@ -5,7 +5,7 @@ Axios.defaults.withCredentials = true
 
 export function axiosUtil(config) {
     const instance = Axios.create({
-        baseURL: ipconfig.LINK_BACK,
+        baseURL: ipconfig.getBackLink(),
         timeout: 5000,
         // 'Content-Type': "application/json;charset=utf-8",
         //  xhrFields: {withCredentials:true},

@@ -130,12 +130,12 @@ router.afterEach(() => {
 
 //Springboot后台路径
 Vue.prototype.getLocation = function () {
-    return ipconfig.LINK_BACK;
+    return ipconfig.getBackLink();
 }
 
 //vue首页页面
 Vue.prototype.getLocationHref = function () {
-    return ipconfig.LINK_FRONT;
+    return ipconfig.getFrontLink;
 }
 
 /**

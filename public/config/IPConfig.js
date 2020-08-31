@@ -1,4 +1,12 @@
-let IPConfig = window.IPConfig = {
-    'LINK_FRONT': 'http://localhost:8081',
-    'LINK_BACK': 'http://localhost:8081',
+export function getFrontLink() {
+    return 'http://localhost:9999'
+}
+
+export function getBackLink() {
+    return 'http://localhost:8081'
+}
+
+export default {
+    getFrontLink,
+    getBackLink
 }
